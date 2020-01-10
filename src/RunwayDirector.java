@@ -8,7 +8,7 @@ public class RunwayDirector implements Runnable {
 	private Queue<Arrival> technicalQ;
 	private Queue<Arrival> logisticsQ;
 	private Queue<FlightDetails> managementQ;
-	private boolean stop;//aksdfnasd
+	private boolean stop;
 	
 	
  	public RunwayDirector(int runwayLength, Queue<Flight> arrivals,	Queue<Flight> departures,
