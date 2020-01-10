@@ -21,7 +21,7 @@ public class RunwayDirector implements Runnable {
  		this.managementQ = managementQ;
  		this.stop = false;
  		Thread t = new Thread(this);
- 		t.start();
+ 		t.start(); //test
 	}
 
 	@Override
