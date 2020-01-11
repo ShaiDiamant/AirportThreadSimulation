@@ -2,7 +2,7 @@
 public class Arrival extends Flight {
 	private int numOfBags;
 	private int cost;
-	private boolean isSecurityIssue;//aa
+	private boolean isSecurityIssue;
 
 	public Arrival(String flightCode, int numOfPassengers, int arrivalTime, Queue<Flight> flightsQ, int numOfBags) {
 		super(flightCode, numOfPassengers, arrivalTime, flightsQ);
@@ -18,7 +18,7 @@ public class Arrival extends Flight {
 		try {
 			Thread.sleep(arrivalTime);
 		} catch (InterruptedException e) {
-			e.printStackTrace();//bb
+			e.printStackTrace();
 		}
 		flightsQ.insert(this);
 	}
@@ -28,7 +28,7 @@ public class Arrival extends Flight {
 	}
 	
 	public int getCost() {
-		return this.cost;//cc
+		return this.cost;
 	}
 	
 	public void securityIssue() {
