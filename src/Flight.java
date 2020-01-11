@@ -1,7 +1,7 @@
 
 abstract public class Flight implements Runnable {
 
-	protected String flightCode;
+	protected String flightCode;//herpa
 	protected int numOfPassengers;
 	protected int arrivalTime;
 	protected Queue<Flight> flightsQ;

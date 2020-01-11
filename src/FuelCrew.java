@@ -3,7 +3,7 @@ public class FuelCrew extends Crew {
 
 	private int maxCapacity;
 	private Queue<Arrival> technicalQ;//TODO builder?
-	private BoundedQueue<Arrival> fuelingQ;//TODO builder?
+	private BoundedQueue<Arrival> fuelingQ;//TODO builder???
 	private Queue<FlightDetails> managementQ;
 
 	public FuelCrew(String name, int maxCapacity, Queue<FlightDetails> managementQ) {
