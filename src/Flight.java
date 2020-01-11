@@ -1,10 +1,10 @@
 
 abstract public class Flight implements Runnable {
 
-	protected String flightCode;//WAHAT
+	protected String flightCode;
 	protected int numOfPassengers;
 	protected int arrivalTime;
-	protected Queue<Flight> flightsQ;//DERP
+	protected Queue<Flight> flightsQ;
 	private Object latestTreater;
 	
 	public Flight (String flightCode, int numOfPassengers, int arrivalTime, Queue<Flight> flightsQ) {
@@ -21,9 +21,6 @@ abstract public class Flight implements Runnable {
 	
 	public int getNumOfPassengers() {
 		return this.numOfPassengers;
-	}
-	public static void test(){
-		return;
 	}
 	public int getArrivalTime() {
 		return this.arrivalTime;
