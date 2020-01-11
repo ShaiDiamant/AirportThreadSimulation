@@ -1,10 +1,10 @@
 
 abstract public class Flight implements Runnable {
 
-	protected String flightCode;
+	protected String flightCode;//TODO HerpaDerpa
 	protected int numOfPassengers;
 	protected int arrivalTime;
-	protected Queue<Flight> flightsQ;
+	protected Queue<Flight> flightsQ;//I believe I can fly
 	private Object latestTreater;
 	
 	public Flight (String flightCode, int numOfPassengers, int arrivalTime, Queue<Flight> flightsQ) {
@@ -35,5 +35,7 @@ abstract public class Flight implements Runnable {
 	public void setLatestTreater(Object o) {
 		this.latestTreater = o;
 	}
-
+	public static void test(){
+		return;
+	}
 }
