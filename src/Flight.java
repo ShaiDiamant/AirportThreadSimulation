@@ -1,10 +1,10 @@
 
 abstract public class Flight implements Runnable {
 
-	protected String flightCode;//TODO: Remove this
+	protected String flightCode;
 	protected int numOfPassengers;
 	protected int arrivalTime;
-	protected Queue<Flight> flightsQ;//TODO: Remove this also
+	protected Queue<Flight> flightsQ;
 	private Object latestTreater;
 	
 	public Flight (String flightCode, int numOfPassengers, int arrivalTime, Queue<Flight> flightsQ) {
