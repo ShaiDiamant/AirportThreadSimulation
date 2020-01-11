@@ -48,5 +48,4 @@ public class Arrival extends Flight {
 		return new ArrivalFlightDetails(this.flightCode, this.numOfPassengers, this.arrivalTime,
 				this.numOfBags, this.cost, this.isSecurityIssue);
 	}
-
 }
