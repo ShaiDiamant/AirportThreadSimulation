@@ -2,7 +2,7 @@
 abstract public class Flight implements Runnable {
 
 	protected String flightCode;
-	protected int numOfPassengers;//TODO: Remove this
+	protected int numOfPassengers;
 	protected int arrivalTime;
 	protected Queue<Flight> flightsQ;
 	private Object latestTreater;
