@@ -11,6 +11,12 @@ abstract public class Crew implements Runnable {
 	public void stop() {
 		this.stop = true;
 	}
+	public void run(){
+		while(!stop){
+			doWork();
+		}
+	}
+	abstract public void doWork();
 
 	
 
