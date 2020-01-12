@@ -24,16 +24,16 @@ public class RunwayDirector implements Runnable {
 
 	public void doWork() {
 		if(qm.arrivals.size() == 0) {//no arrivals, can do departures
-			Flight curr = qm.departures.extract();
+			Departure curr = qm.departures.extract();
 			handleDeparture(curr);
 		}
 		else {//there are arrivals, must do arrivals
-			Flight curr = qm.arrivals.extract();
+			Arrival curr = qm.arrivals.extract();
 			handleArrival(curr);
 		}
 	}
 	
-	private void handleArrival(Flight arrival) {
+	private void handleArrival(Arrival arrival) {
 		arrival.setLatestTreater(this);
 		long depTime = (rand.nextInt(6) + 5)*1000;
 		try {
@@ -42,20 +42,14 @@ public class RunwayDirector implements Runnable {
 			e.printStackTrace();
 		}
 		if(Math.random()<=0.25) {
-			handleTechnicalError(arrival);
+			qm.technicalQ.insert(arrival);
 		}
 		else {
-			Arrival arr = (Arrival)arrival;
-			qm.logisticsQ.insert(arr);
+			qm.logisticsQ.insert(arrival);
 		}
 	}
-	
-	private void handleTechnicalError(Flight arrival) {
-		Arrival arr = (Arrival)arrival;
-		qm.technicalQ.insert(arr);
-	}
-	
-	private void handleDeparture(Flight departure) {
+
+	private void handleDeparture(Departure departure) {
 		departure.setLatestTreater(this);
 		long depTime = (rand.nextInt(6) + 5)*1000;
 		try {
