@@ -25,7 +25,7 @@ public class Departure extends Flight {
 
 	@Override
 	public FlightDetails getFlightDetails() {
-		return new DepartureFlightDetails(this.flightCode, this.numOfPassengers, this.arrivalTime, this.dest);
+		return new DepartureFlightDetails(this.flightCode, this.numOfPassengers, this.totalTime, this.dest);
 	}
 	
 

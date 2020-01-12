@@ -28,8 +28,16 @@ public class ManagementCrew extends Crew {
 		}
 	}
 	
-	public void printDetails(curr) {
-		
+	public void printDetails(FlightDetails curr) {
+		System.out.println("Flight Details:");
+		System.out.println("Flight Code: " +curr.getFlightCode() );
+		System.out.println("Total Time In Airfield: " + curr.getTimeInAirfield());
+		if(curr instanceof ArrivalFlightDetails) {
+			System.out.println("Cost For Technical Treatment: " + ((ArrivalFlightDetails)curr).getCost());
+		}
+		else {
+			System.out.println("Cost For Technical Treatment: 0");
+		}
 	}
 
 }

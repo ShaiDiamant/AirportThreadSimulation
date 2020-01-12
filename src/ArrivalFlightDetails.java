@@ -11,5 +11,16 @@ public class ArrivalFlightDetails extends FlightDetails {
 		this.cost = cost;
 		this.securityIssue = securityIssue;
 	}
+	public int getCost() {
+		return this.cost; 
+	}
+	
+	public boolean getSecurityIssue() {
+		return this.securityIssue;
+	}
+	
+	public int getCargo() {
+		return this.cargo;
+	}
 
 }
