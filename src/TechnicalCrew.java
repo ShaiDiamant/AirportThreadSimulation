@@ -1,19 +1,18 @@
 import java.util.Random;
 
 public class TechnicalCrew extends Crew {
-	private int totalCost;
+
 
 	public TechnicalCrew(String name, QueueManager qm) {
 		super(name, qm);
-		totalCost = 0;
 	}
 
 	@Override
 	public void doWork() {
 		Random rand = new Random();
 		Arrival curr = qm.technicalQ.extract();
-		fixFlight(rand.nextInt(3)+3);
-		this.totalCost = this.totalCost + (rand.nextInt(501)+500);
+		fixFlight(rand.nextInt(3)+3, curr);
+		curr.increaseCost(rand.nextInt(501)+500);
 		forwardPlane(curr);
 	}
 
@@ -32,9 +31,10 @@ public class TechnicalCrew extends Crew {
 		}
 	}
 
-	public void fixFlight(int time) {
+	public void fixFlight(int time,Arrival curr) {
 		try {
 			Thread.sleep(time*1000);
+			curr.increaseTime(time);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}

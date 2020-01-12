@@ -1,13 +1,15 @@
 
 public class Arrival extends Flight {
 	private int numOfBags;
-	private int cost;
+	private int totalCost;
 	private boolean isSecurityIssue;
+	private int totalTime;
 
 	public Arrival(String flightCode, int numOfPassengers, int arrivalTime, QueueManager qm, int numOfBags) {
 		super(flightCode, numOfPassengers, arrivalTime, qm);
 		this.numOfBags = numOfBags;
-		this.cost=0;
+		this.totalCost=0;
+		this.totalTime=0;
 		this.isSecurityIssue=false;
 		Thread t = new Thread(this);
 		t.start();
@@ -28,7 +30,7 @@ public class Arrival extends Flight {
 	}
 	
 	public int getCost() {
-		return this.cost;
+		return this.totalCost;
 	}
 	
 	public void securityIssue() {
@@ -40,12 +42,16 @@ public class Arrival extends Flight {
 	}
 	
 	public void increaseCost(int c) {
-		this.cost = this.cost+c;
+		this.totalCost = this.totalCost+c;
+	}
+	
+	public void increaseTime(int t) {
+		this.totalTime=this.totalTime+t;
 	}
 
 	@Override
 	public FlightDetails getFlightDetails() {
 		return new ArrivalFlightDetails(this.flightCode, this.numOfPassengers, this.arrivalTime,
-				this.numOfBags, this.cost, this.isSecurityIssue);
+				this.numOfBags, this.totalCost, this.isSecurityIssue);
 	}
 }

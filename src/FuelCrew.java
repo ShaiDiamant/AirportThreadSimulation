@@ -2,10 +2,14 @@ import java.util.*;
 public class FuelCrew extends Crew {
 
 	private int maxCapacity;
+	private int numOfFuels;
+	private int currCapacity;
 
 	public FuelCrew(String name, int maxCapacity, QueueManager qm) {
 		super(name, qm);
 		this.maxCapacity=maxCapacity;
+		this.currCapacity = this.maxCapacity;
+		this.numOfFuels=0;
 		Thread t= new Thread(this);
 		t.start();
 	}
@@ -20,20 +24,24 @@ public class FuelCrew extends Crew {
 	}
 
 	public void fuelTest(Arrival curr) {
-		if(maxCapacity>=1000) {
+		if(currCapacity>=1000) {
 			Random rand = new Random();
 			int fuelTime = rand.nextInt(2)+3;
 			try {
 				Thread.sleep(fuelTime*1000);
+				curr.increaseTime(fuelTime);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			maxCapacity=maxCapacity-1000;
+			this.currCapacity=this.currCapacity-1000;
+			this.numOfFuels++;
 		}
 		else {
 			qm.fuelingQ.insert(curr);
 			try {
 				Thread.sleep(5000);
+				this.currCapacity = this.maxCapacity;
+				
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
