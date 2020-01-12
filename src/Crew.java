@@ -1,5 +1,5 @@
 
-abstract public class Crew implements Runnable {
+abstract public class Crew implements Runnable,Stoppable {
 	
 	protected String nameCrew;
 	protected boolean stop;

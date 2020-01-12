@@ -1,16 +1,26 @@
+import java.util.Vector;
 
 public class ManagementCrew extends Crew {
 	
-	public ManagementCrew (String name, QueueManager qm) {
+	private int numOfFlightsToday;
+	private int numOfFlightsThatPassed;
+	private Vector<Stoppable> workers;
+	
+	public ManagementCrew (String name, QueueManager qm, int numOfFlightsToday, Vector<Stoppable> workers) {
 		super(name,qm);
+		this.numOfFlightsToday = numOfFlightsToday;
+		this.numOfFlightsThatPassed = 0;
+		this.workers=workers;
 	}
 
 	@Override
 	public void run() {
-		while (!stop && !end) {
+		while (!end()) {
 			doWork();
 		}
-
+		for(int i=0; i<workers.size(); i++) {
+			workers.get(i).stop();
+		}	
 	}
 	
 	public void doWork() {
@@ -18,9 +28,10 @@ public class ManagementCrew extends Crew {
 		curr = qm.managementQ.extract();
 		enterInfo();
 		printDetails(curr);
+		this.numOfFlightsThatPassed++;
 	}
 	
-	public void enterInfo() { //TODO: SQL
+	private void enterInfo() { //TODO: SQL
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
@@ -28,7 +39,7 @@ public class ManagementCrew extends Crew {
 		}
 	}
 	
-	public void printDetails(FlightDetails curr) {
+	private void printDetails(FlightDetails curr) {
 		System.out.println("Flight Details:");
 		System.out.println("Flight Code: " +curr.getFlightCode() );
 		System.out.println("Total Time In Airfield: " + curr.getTimeInAirfield());
@@ -39,5 +50,8 @@ public class ManagementCrew extends Crew {
 			System.out.println("Cost For Technical Treatment: 0");
 		}
 	}
-
+	
+	private boolean end() {
+		return this.numOfFlightsThatPassed == this.numOfFlightsToday;
+	}
 }

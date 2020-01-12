@@ -1,6 +1,6 @@
 import java.util.Random;
 
-public class RunwayDirector implements Runnable {
+public class RunwayDirector implements Runnable,Stoppable {
 	private int runwayLength;
 	private Random rand;
 	private QueueManager qm;

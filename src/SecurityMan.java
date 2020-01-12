@@ -1,5 +1,5 @@
 
-public class SecurityMan implements Runnable{
+public class SecurityMan implements Runnable, Stoppable{
 
 	private String rank;
 	private int checkTime;
