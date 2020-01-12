@@ -18,14 +18,18 @@ public class RunwayDirector implements Runnable {
 	@Override
 	public void run() {
 		while(!stop) {
-			if(qm.arrivals.size() == 0) {//no arrivals, can do departures
-				Flight curr = qm.departures.extract();
-				handleDeparture(curr);
-			}
-			else {//there are arrivals, must do arrivals
-				Flight curr = qm.arrivals.extract();
-				handleArrival(curr);
-			}
+			doWork();
+		}
+	}
+
+	public void doWork() {
+		if(qm.arrivals.size() == 0) {//no arrivals, can do departures
+			Flight curr = qm.departures.extract();
+			handleDeparture(curr);
+		}
+		else {//there are arrivals, must do arrivals
+			Flight curr = qm.arrivals.extract();
+			handleArrival(curr);
 		}
 	}
 	
