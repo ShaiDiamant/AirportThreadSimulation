@@ -8,13 +8,16 @@ abstract public class Crew implements Runnable {
 		this.nameCrew=name;
 		this.stop=false;
 	}
+	
 	public void stop() {
 		this.stop = true;
 	}
+	
 	public void run(){
 		while(!stop){
 			doWork();
 		}
 	}
-	abstract public void doWork();//TODO: Create doWork for all inheritors
+	
+	abstract public void doWork();
 }

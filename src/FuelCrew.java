@@ -15,13 +15,12 @@ public class FuelCrew extends Crew {
 	}
 
 	@Override
-	public void run() {
+	public void doWork() {
 		Arrival curr;
-		while(!stop) {
-			curr = fuelingQ.extract();
-			fuelTest(curr);
-			forwardPlane(curr);
-		}
+		curr = fuelingQ.extract();
+		fuelTest(curr);
+		forwardPlane(curr);
+
 	}
 
 	public void fuelTest(Arrival curr) {

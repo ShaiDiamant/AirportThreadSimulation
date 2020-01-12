@@ -27,14 +27,18 @@ public class RunwayDirector implements Runnable {
 	@Override
 	public void run() {
 		while(!stop) {
-			if(arrivals.size() == 0) {//no arrivals, can do departures
-				Flight curr = departures.extract();
-				handleDeparture(curr);
-			}
-			else {//there are arrivals, must do arrivals
-				Flight curr = arrivals.extract();
-				handleArrival(curr);
-			}
+			doWork();
+		}
+	}
+	
+	public void doWork() {
+		if(arrivals.size() == 0) {//no arrivals, can do departures
+			Flight curr = departures.extract();
+			handleDeparture(curr);
+		}
+		else {//there are arrivals, must do arrivals
+			Flight curr = arrivals.extract();
+			handleArrival(curr);
 		}
 	}
 	

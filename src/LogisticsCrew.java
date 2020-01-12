@@ -14,15 +14,13 @@ public class LogisticsCrew extends Crew {
 	}
 
 	@Override
-	public void run() {
+	public void doWork() {
 		Arrival curr;
-		while(!stop) {
-			curr = logisticsQ.extract();
-			capacityCheck(curr);
-			forwardPlane(curr);
-		}
+		curr = logisticsQ.extract();
+		capacityCheck(curr);
+		forwardPlane(curr);
 	}
-	
+
 	private void capacityCheck(Arrival curr) {
 		if(cargoCapacity >= curr.getNumOfBags()){
 			int timeWait= curr.getNumOfBags();
@@ -47,7 +45,7 @@ public class LogisticsCrew extends Crew {
 
 		}
 	}
-	
+
 	private void forwardPlane(Arrival curr) {
 		curr.setLatestTreater(this);
 		if(Math.random()<=0.1) {

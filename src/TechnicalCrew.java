@@ -6,7 +6,7 @@ public class TechnicalCrew extends Crew {
 	private Queue<Arrival> logisticsQ;
 	private Queue<Arrival> securityQ;
 	private Queue<FlightDetails> managementQ;
-	
+
 	public TechnicalCrew(String name, Queue<Arrival> technicalQ, Queue<Arrival> logisticsQ,
 			Queue<Arrival> securityQ, Queue<FlightDetails> managementQ) {
 		super(name);
@@ -18,16 +18,14 @@ public class TechnicalCrew extends Crew {
 	}
 
 	@Override
-	public void run() {
+	public void doWork() {
 		Random rand = new Random();
-		while(!stop) {
-			Arrival curr = technicalQ.extract();
-			fixFlight(rand.nextInt(3)+3);
-			this.totalCost = this.totalCost + (rand.nextInt(501)+500);
-			forwardPlane(curr);
-		}
+		Arrival curr = technicalQ.extract();
+		fixFlight(rand.nextInt(3)+3);
+		this.totalCost = this.totalCost + (rand.nextInt(501)+500);
+		forwardPlane(curr);
 	}
-	
+
 	private void forwardPlane(Arrival curr) {
 		curr.setLatestTreater(this);
 		Object latestTreater = curr.getLatestTreater();
@@ -42,7 +40,7 @@ public class TechnicalCrew extends Crew {
 			this.managementQ.insert(f);
 		}
 	}
-	
+
 	public void fixFlight(int time) {
 		try {
 			Thread.sleep(time*3000);
