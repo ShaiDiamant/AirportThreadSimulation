@@ -16,5 +16,5 @@ abstract public class Crew implements Runnable {
 			doWork();
 		}
 	}
-	abstract public void doWork();
+	abstract public void doWork();//TODO: Create doWork for all inheritors
 }
