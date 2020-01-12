@@ -16,10 +16,9 @@ public class SecurityMan implements Runnable{
 	}
 
 	public void run() {
-		Arrival curr;
-		curr = qm.securityQ.extract();
-		suspiciousObjectCheck(curr);
-		forwardPlane(curr);
+		while(!stop){
+			doWork();
+		}
 	}
 
 	public void doWork() {
