@@ -38,6 +38,7 @@ public class RunwayDirector implements Runnable {
 		long depTime = (rand.nextInt(6) + 5)*1000;
 		try {
 			Thread.sleep(depTime);
+			arrival.increaseTime(depTime/1000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}

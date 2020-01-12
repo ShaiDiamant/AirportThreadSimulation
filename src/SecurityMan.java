@@ -16,10 +16,9 @@ public class SecurityMan implements Runnable{
 	}
 
 	public void run() {
-		Arrival curr;
-		curr = qm.securityQ.extract();
-		suspiciousObjectCheck(curr);
-		forwardPlane(curr);
+		while (!stop){
+			doWork();
+		}
 	}
 
 	public void doWork() {
@@ -32,12 +31,14 @@ public class SecurityMan implements Runnable{
 	public void suspiciousObjectCheck(Arrival curr) {
 		try {
 			Thread.sleep(checkTime*1000);
+			curr.increaseTime(checkTime);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 		if(Math.random()<=0.05) {
 			try {
 				Thread.sleep(2000);
+				curr.increaseTime(2);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
