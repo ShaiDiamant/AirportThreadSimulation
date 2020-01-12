@@ -35,10 +35,10 @@ public class RunwayDirector implements Runnable {
 	
 	private void handleArrival(Arrival arrival) {
 		arrival.setLatestTreater(this);
-		long depTime = (rand.nextInt(6) + 5)*1000;
+		int depTime = (rand.nextInt(6) + 5);
 		try {
-			Thread.sleep(depTime);
-			arrival.increaseTime(depTime/1000);
+			Thread.sleep(depTime*1000);
+			arrival.increaseTime(depTime);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -52,9 +52,10 @@ public class RunwayDirector implements Runnable {
 
 	private void handleDeparture(Departure departure) {
 		departure.setLatestTreater(this);
-		long depTime = (rand.nextInt(6) + 5)*1000;
+		int depTime = (rand.nextInt(6) + 5);
 		try {
-			Thread.sleep(depTime);
+			Thread.sleep(depTime*1000);
+			departure.increaseTime(depTime);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}

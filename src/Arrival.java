@@ -3,13 +3,12 @@ public class Arrival extends Flight {
 	private int numOfBags;
 	private int totalCost;
 	private boolean isSecurityIssue;
-	private int totalTime;
+
 
 	public Arrival(String flightCode, int numOfPassengers, int arrivalTime, QueueManager qm, int numOfBags) {
 		super(flightCode, numOfPassengers, arrivalTime, qm);
 		this.numOfBags = numOfBags;
 		this.totalCost=0;
-		this.totalTime=0;
 		this.isSecurityIssue=false;
 		Thread t = new Thread(this);
 		t.start();
@@ -43,10 +42,6 @@ public class Arrival extends Flight {
 	
 	public void increaseCost(int c) {
 		this.totalCost = this.totalCost+c;
-	}
-	
-	public void increaseTime(int t) {
-		this.totalTime=this.totalTime+t;
 	}
 
 	@Override
