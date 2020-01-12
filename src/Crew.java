@@ -17,7 +17,4 @@ abstract public class Crew implements Runnable {
 		}
 	}
 	abstract public void doWork();
-
-	
-
 }

@@ -22,6 +22,7 @@ abstract public class Flight implements Runnable {
 	public int getNumOfPassengers() {
 		return this.numOfPassengers;
 	}
+
 	public int getArrivalTime() {
 		return this.arrivalTime;
 	}
