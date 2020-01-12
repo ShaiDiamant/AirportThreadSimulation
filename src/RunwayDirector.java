@@ -3,7 +3,7 @@ import java.util.Random;
 public class RunwayDirector implements Runnable {
 	private int runwayLength;
 	private Random rand;
-	private Queue<Flight> arrivals;//TODO Queue class for everyone??
+	private Queue<Flight> arrivals;
 	private Queue<Flight> departures;
 	private Queue<Arrival> technicalQ;
 	private Queue<Arrival> logisticsQ;
