@@ -1,11 +1,11 @@
 
 public class SecurityMan implements Runnable{
-	
+
 	private String rank;
 	private int checkTime;
 	private boolean stop;
 	private QueueManager qm;
-	
+
 	public SecurityMan (String rank, int checkTime, QueueManager qm) {
 		this.rank=rank;
 		this.checkTime=checkTime;
@@ -14,16 +14,21 @@ public class SecurityMan implements Runnable{
 		Thread t = new Thread(this);
 		t.start();
 	}
-	
+
 	public void run() {
 		Arrival curr;
-		while(!stop) {
-			curr = qm.securityQ.extract();
-			suspiciousObjectCheck(curr);
-			forwardPlane(curr);
-		}
+		curr = qm.securityQ.extract();
+		suspiciousObjectCheck(curr);
+		forwardPlane(curr);
 	}
-	
+
+	public void doWork() {
+		Arrival curr;
+		curr = qm.securityQ.extract();
+		suspiciousObjectCheck(curr);
+		forwardPlane(curr);
+	}
+
 	public void suspiciousObjectCheck(Arrival curr) {
 		try {
 			Thread.sleep(checkTime*1000);
@@ -38,12 +43,12 @@ public class SecurityMan implements Runnable{
 			}
 		}
 	}
-	
+
 	public void forwardPlane(Arrival curr) {
 		curr.setLatestTreater(this);
 		qm.fuelingQ.insert(curr);
 	}
-	
+
 	public void stop() {
 		this.stop = true;
 	}
