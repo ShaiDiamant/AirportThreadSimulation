@@ -4,13 +4,13 @@ public class SecurityMan implements Runnable{
 	private String rank;
 	private int checkTime;
 	private boolean stop;
-	private BoundedQueue<Arrival> fuelingQ;
-	private Queue<Arrival> securityQ;
+	private QueueManager qm;
 	
-	public SecurityMan (String rank, int checkTime) {
+	public SecurityMan (String rank, int checkTime, QueueManager qm) {
 		this.rank=rank;
 		this.checkTime=checkTime;
 		this.stop=false;
+		this.qm = qm;
 		Thread t = new Thread(this);
 		t.start();
 	}
@@ -18,7 +18,7 @@ public class SecurityMan implements Runnable{
 	public void run() {
 		Arrival curr;
 		while(!stop) {
-			curr = securityQ.extract();
+			curr = qm.securityQ.extract();
 			suspiciousObjectCheck(curr);
 			forwardPlane(curr);
 		}
@@ -41,7 +41,7 @@ public class SecurityMan implements Runnable{
 	
 	public void forwardPlane(Arrival curr) {
 		curr.setLatestTreater(this);
-		fuelingQ.insert(curr);
+		qm.fuelingQ.insert(curr);
 	}
 	
 	public void stop() {

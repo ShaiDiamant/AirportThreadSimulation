@@ -2,13 +2,12 @@
 public class LogisticsCrew extends Crew {
 
 	private int cargoCapacity;
-	private Queue<Arrival> logisticsQ;
-	private Queue<Arrival> technicalQ;
-	private Queue<Arrival> securityQ;
+	private QueueManager qm;
 
-	public LogisticsCrew(String name, int cargoCapacity) {
-		super(name);
+	public LogisticsCrew(String name, int cargoCapacity, QueueManager qm) {
+		super(name,qm);
 		this.cargoCapacity=cargoCapacity;
+		this.qm = qm;
 		Thread t = new Thread(this);
 		t.start();
 	}
@@ -17,7 +16,7 @@ public class LogisticsCrew extends Crew {
 	public void run() {
 		Arrival curr;
 		while(!stop) {
-			curr = logisticsQ.extract();
+			curr = qm.logisticsQ.extract();
 			capacityCheck(curr);
 			forwardPlane(curr);
 		}
@@ -51,10 +50,10 @@ public class LogisticsCrew extends Crew {
 	private void forwardPlane(Arrival curr) {
 		curr.setLatestTreater(this);
 		if(Math.random()<=0.1) {
-			technicalQ.insert(curr);
+			qm.technicalQ.insert(curr);
 		}
 		else {
-			securityQ.insert(curr);
+			qm.securityQ.insert(curr);
 		}
 	}
 

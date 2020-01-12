@@ -4,8 +4,8 @@ public class Arrival extends Flight {
 	private int cost;
 	private boolean isSecurityIssue;
 
-	public Arrival(String flightCode, int numOfPassengers, int arrivalTime, Queue<Flight> flightsQ, int numOfBags) {
-		super(flightCode, numOfPassengers, arrivalTime, flightsQ);
+	public Arrival(String flightCode, int numOfPassengers, int arrivalTime, QueueManager qm, int numOfBags) {
+		super(flightCode, numOfPassengers, arrivalTime, qm);
 		this.numOfBags = numOfBags;
 		this.cost=0;
 		this.isSecurityIssue=false;
@@ -20,7 +20,7 @@ public class Arrival extends Flight {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		flightsQ.insert(this);
+		qm.arrivals.insert(this);
 	}
 	
 	public int getNumOfBags() {

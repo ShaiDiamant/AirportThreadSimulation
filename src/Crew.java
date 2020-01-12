@@ -3,9 +3,11 @@ abstract public class Crew implements Runnable {
 	
 	protected String nameCrew;
 	protected boolean stop;
+	protected QueueManager qm;
 	
-	public Crew (String name) {
+	public Crew (String name, QueueManager qm) {
 		this.nameCrew=name;
+		this.qm = qm;
 		this.stop=false;
 	}
 	public void stop() {
@@ -16,5 +18,5 @@ abstract public class Crew implements Runnable {
 			doWork();
 		}
 	}
-	abstract public void doWork();//TODO: Create doWork for all inheritors
+	abstract public void doWork();
 }

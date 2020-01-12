@@ -3,22 +3,13 @@ import java.util.Random;
 public class RunwayDirector implements Runnable {
 	private int runwayLength;
 	private Random rand;
-	private Queue<Flight> arrivals;
-	private Queue<Flight> departures;
-	private Queue<Arrival> technicalQ;
-	private Queue<Arrival> logisticsQ;
-	private Queue<FlightDetails> managementQ;
+	private QueueManager qm;
 	private boolean stop;
 	
 	
- 	public RunwayDirector(int runwayLength, Queue<Flight> arrivals,	Queue<Flight> departures,
- 			Queue<Arrival> technicalQ, Queue<Arrival> logisticsQ, Queue<FlightDetails> managementQ) {
+ 	public RunwayDirector(int runwayLength, QueueManager qm) {
  		this.runwayLength = runwayLength;
- 		this.arrivals = arrivals;
- 		this.departures = departures;
- 		this.technicalQ = technicalQ;
- 		this.logisticsQ = logisticsQ;
- 		this.managementQ = managementQ;
+		this.qm = qm;
  		this.stop = false;
  		Thread t = new Thread(this);
  		t.start(); //test
@@ -27,12 +18,12 @@ public class RunwayDirector implements Runnable {
 	@Override
 	public void run() {
 		while(!stop) {
-			if(arrivals.size() == 0) {//no arrivals, can do departures
-				Flight curr = departures.extract();
+			if(qm.arrivals.size() == 0) {//no arrivals, can do departures
+				Flight curr = qm.departures.extract();
 				handleDeparture(curr);
 			}
 			else {//there are arrivals, must do arrivals
-				Flight curr = arrivals.extract();
+				Flight curr = qm.arrivals.extract();
 				handleArrival(curr);
 			}
 		}
@@ -51,13 +42,13 @@ public class RunwayDirector implements Runnable {
 		}
 		else {
 			Arrival arr = (Arrival)arrival;
-			this.logisticsQ.insert(arr);
+			qm.logisticsQ.insert(arr);
 		}
 	}
 	
 	private void handleTechnicalError(Flight arrival) {
 		Arrival arr = (Arrival)arrival;
-		this.technicalQ.insert(arr);
+		qm.technicalQ.insert(arr);
 	}
 	
 	private void handleDeparture(Flight departure) {
@@ -69,7 +60,7 @@ public class RunwayDirector implements Runnable {
 			e.printStackTrace();
 		}
 		FlightDetails det = departure.getFlightDetails();
-		this.managementQ.insert(det);
+		qm.managementQ.insert(det);
 	}
 	
 	public void stop() {

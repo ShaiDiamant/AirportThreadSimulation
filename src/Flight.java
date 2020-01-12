@@ -4,14 +4,14 @@ abstract public class Flight implements Runnable {
 	protected String flightCode;
 	protected int numOfPassengers;
 	protected int arrivalTime;
-	protected Queue<Flight> flightsQ;
-	private Object latestTreater;
+	protected QueueManager qm;
+	protected Object latestTreater;
 	
-	public Flight (String flightCode, int numOfPassengers, int arrivalTime, Queue<Flight> flightsQ) {
+	public Flight (String flightCode, int numOfPassengers, int arrivalTime, QueueManager qm) {
 		this.flightCode=flightCode;
 		this.numOfPassengers=numOfPassengers;
 		this.arrivalTime=arrivalTime*1000;
-		this.flightsQ=flightsQ;
+		this.qm = qm;
 		this.latestTreater = null;
 	}
 	

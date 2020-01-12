@@ -3,8 +3,8 @@ public class Departure extends Flight {
 	
 	private String dest;
 
-	public Departure(String flightCode, int numOfPassengers, int arrivalTime, Queue<Flight> flightsQ , String dest) {
-		super(flightCode, numOfPassengers, arrivalTime, flightsQ);
+	public Departure(String flightCode, int numOfPassengers, int arrivalTime, QueueManager qm , String dest) {
+		super(flightCode, numOfPassengers, arrivalTime, qm);
 		this.dest=dest;
 		Thread t = new Thread(this);
 		t.start();
@@ -16,7 +16,7 @@ public class Departure extends Flight {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		flightsQ.insert(this);
+		qm.departures.insert(this);
 	}
 	
 	public String getDestination() {
