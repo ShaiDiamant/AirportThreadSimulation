@@ -156,12 +156,12 @@ public class GUI {
 					numForSecurityDuration = Integer.parseInt(textField_1.getText());
 				}
 				
-				startAirport();
+				startAirport(numForSecurityDuration, numOfTechTeams);
 			}
 		});
 	}
 	
-	public static void startAirport() {
-		System.out.println("hi");
+	public static void startAirport(int numForSecurityDuration, int numOfTechTeams) {
+		System.out.println("Security Duration: "+numForSecurityDuration+", Technical Teams: "+numOfTechTeams);
 	}
 }
