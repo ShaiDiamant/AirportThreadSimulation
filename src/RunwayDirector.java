@@ -8,16 +8,16 @@ public class RunwayDirector implements Runnable,Stoppable {
 	private boolean stop; 
 	private int numOfFlightsToday;
 	private int numOfFlightsThatPassed;
-	private Vector<RunwayDirector> runwayDirectoers;
+	private Vector<RunwayDirector> runwayDirectors;
 
 
-	public RunwayDirector(int runwayLength, int numOfFlightsToday, QueueManager qm, Vector<RunwayDirector> runwayDirectoers) {
+	public RunwayDirector(int runwayLength, int numOfFlightsToday, QueueManager qm, Vector<RunwayDirector> runwayDirectors) {
 		this.runwayLength = runwayLength;
 		this.qm = qm;
 		this.stop = false;
 		this.numOfFlightsToday = numOfFlightsToday;
 		this.numOfFlightsThatPassed = 0;
-		this.runwayDirectoers = runwayDirectoers;
+		this.runwayDirectors = runwayDirectors;
 		Thread t = new Thread(this);
 		t.start(); //test
 	}
@@ -28,8 +28,8 @@ public class RunwayDirector implements Runnable,Stoppable {
 			doWork();
 			this.numOfFlightsThatPassed++;
 		}
-		for(int i=0; i<runwayDirectoers.size(); i++) {
-			runwayDirectoers.get(i).stop();
+		for(int i=0; i<runwayDirectors.size(); i++) {
+			runwayDirectors.get(i).stop();
 		}
 	}
 
@@ -84,8 +84,8 @@ public class RunwayDirector implements Runnable,Stoppable {
 
 	private boolean end() {
 		int sumNumOfFlights=0;
-		for(int i=0; i<runwayDirectoers.size(); i++) {
-			RunwayDirector curr = runwayDirectoers.get(i);
+		for(int i=0; i<runwayDirectors.size(); i++) {
+			RunwayDirector curr = runwayDirectors.get(i);
 			sumNumOfFlights = sumNumOfFlights + curr.getNumOfFlightsThatPassed();
 		}
 		return this.numOfFlightsToday == sumNumOfFlights;
