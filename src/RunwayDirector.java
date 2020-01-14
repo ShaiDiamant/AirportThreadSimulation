@@ -5,7 +5,7 @@ public class RunwayDirector implements Runnable,Stoppable {
 	private int runwayLength;
 	private Random rand;
 	private QueueManager qm;
-	private boolean stop; // תכלס צריך להעיף את זה
+	private boolean stop; 
 	private int numOfFlightsToday;
 	private int numOfFlightsThatPassed;
 	private Vector<RunwayDirector> runwayDirectoers;
@@ -24,9 +24,12 @@ public class RunwayDirector implements Runnable,Stoppable {
 
 	@Override
 	public void run() {
-		while(!end()) {
+		while(!end() && !stop) {
 			doWork();
 			this.numOfFlightsThatPassed++;
+		}
+		for(int i=0; i<runwayDirectoers.size(); i++) {
+			runwayDirectoers.get(i).stop();
 		}
 	}
 
