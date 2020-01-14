@@ -59,4 +59,8 @@ public class FuelCrew extends Crew {
 			qm.managementQ.insert(f);
 		}
 	}
+
+	public int getNumOfFuels(){
+		return this.numOfFuels;
+	}
 }

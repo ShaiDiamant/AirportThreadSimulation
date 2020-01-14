@@ -61,4 +61,7 @@ public class LogisticsCrew extends Crew {
 		}
 	}
 
+	public int getNumOfCargoTrucks(){
+		return this.numOfCargoTrucks;
+	}
 }

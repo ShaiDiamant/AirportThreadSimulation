@@ -18,15 +18,15 @@ public class RunwayDirector implements Runnable,Stoppable {
 		this.numOfFlightsToday = numOfFlightsToday;
 		this.numOfFlightsThatPassed = 0;
 		this.runwayDirectors = runwayDirectors;
+		this.rand = new Random();
 		Thread t = new Thread(this);
-		t.start(); //test
+		t.start();
 	}
 
 	@Override
 	public void run() {
 		while(!end() && !stop) {
 			doWork();
-			this.numOfFlightsThatPassed++;
 		}
 		for(int i=0; i<runwayDirectors.size(); i++) {
 			runwayDirectors.get(i).stop();
@@ -42,6 +42,7 @@ public class RunwayDirector implements Runnable,Stoppable {
 			Arrival curr = qm.arrivals.extract();
 			handleArrival(curr);
 		}
+		this.numOfFlightsThatPassed++;
 	}
 
 	private void handleArrival(Arrival arrival) {
