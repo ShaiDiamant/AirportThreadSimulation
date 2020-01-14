@@ -1,24 +1,32 @@
 import java.util.Random;
+import java.util.Vector;
 
 public class RunwayDirector implements Runnable,Stoppable {
 	private int runwayLength;
 	private Random rand;
 	private QueueManager qm;
-	private boolean stop;
-	
-	
- 	public RunwayDirector(int runwayLength, QueueManager qm) {
- 		this.runwayLength = runwayLength;
+	private boolean stop; // תכלס צריך להעיף את זה
+	private int numOfFlightsToday;
+	private int numOfFlightsThatPassed;
+	private Vector<RunwayDirector> runwayDirectoers;
+
+
+	public RunwayDirector(int runwayLength, int numOfFlightsToday, QueueManager qm, Vector<RunwayDirector> runwayDirectoers) {
+		this.runwayLength = runwayLength;
 		this.qm = qm;
- 		this.stop = false;
- 		Thread t = new Thread(this);
- 		t.start(); //test
+		this.stop = false;
+		this.numOfFlightsToday = numOfFlightsToday;
+		this.numOfFlightsThatPassed = 0;
+		this.runwayDirectoers = runwayDirectoers;
+		Thread t = new Thread(this);
+		t.start(); //test
 	}
 
 	@Override
 	public void run() {
-		while(!stop) {
+		while(!end()) {
 			doWork();
+			this.numOfFlightsThatPassed++;
 		}
 	}
 
@@ -32,7 +40,7 @@ public class RunwayDirector implements Runnable,Stoppable {
 			handleArrival(curr);
 		}
 	}
-	
+
 	private void handleArrival(Arrival arrival) {
 		arrival.setLatestTreater(this);
 		int depTime = (rand.nextInt(6) + 5);
@@ -62,9 +70,21 @@ public class RunwayDirector implements Runnable,Stoppable {
 		FlightDetails det = departure.getFlightDetails();
 		qm.managementQ.insert(det);
 	}
-	
+
 	public void stop() {
 		this.stop = true;
 	}
+	
+	public int getNumOfFlightsThatPassed() {
+		return this.numOfFlightsThatPassed;
+	}
 
+	private boolean end() {
+		int sumNumOfFlights=0;
+		for(int i=0; i<runwayDirectoers.size(); i++) {
+			RunwayDirector curr = runwayDirectoers.get(i);
+			sumNumOfFlights = sumNumOfFlights + curr.getNumOfFlightsThatPassed();
+		}
+		return this.numOfFlightsToday == sumNumOfFlights;
+	}
 }
