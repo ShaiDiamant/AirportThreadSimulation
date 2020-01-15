@@ -1,6 +1,6 @@
 
 public class Arrival extends Flight {
-	private int numOfBags;
+	private int numOfBags;//Test2
 	private int totalCost;
 	private boolean isSecurityIssue;
 
