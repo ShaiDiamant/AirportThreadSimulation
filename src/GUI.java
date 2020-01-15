@@ -123,7 +123,7 @@ public class GUI {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				int key = e.getKeyCode();
-				if((key>=e.VK_0 && key<=e.VK_9) || (key>=e.VK_NUMPAD0 && key<=e.VK_NUMPAD9) || key == e.VK_DELETE || key == e.VK_BACK_SPACE) {
+				if(((key>=e.VK_0 && key<=e.VK_9) || (key>=e.VK_NUMPAD0 && key<=e.VK_NUMPAD9) || key == e.VK_DELETE || key == e.VK_BACK_SPACE) && !e.isShiftDown()) {
 					textField_1.setEditable(true);
 					textField_1.setBackground(Color.white);
 				}
