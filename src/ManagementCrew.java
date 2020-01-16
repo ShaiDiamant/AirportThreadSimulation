@@ -53,7 +53,7 @@ public class ManagementCrew extends Crew {
 		System.out.println("The number of passanfers during ths day: " + sumOfPassangers);
 		int sumOfCargo = findNumOfCargo();
 		System.out.println("The number of crgo during the day: " + sumOfCargo);
-		// мтщеъ йтг рфех
+		// пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
 		int sumCost = findCostOfFlights();
 		System.out.println("The cost of the day: " + sumCost);
 		int sumOfGas = findSumOfGas();
@@ -96,7 +96,7 @@ public class ManagementCrew extends Crew {
 		for(int i=0; i<qm.managementQ.size(); i++) {
 			FlightDetails curr = qm.managementQ.extract();
 			if(curr instanceof ArrivalFlightDetails) {
-				sumGas = sumGas + ((ArrivalFlightDetails)curr).getamountOfFuel()();
+				sumGas = sumGas + ((ArrivalFlightDetails)curr).getamountOfFuel();
 			}
 		}
 		return sumGas;
