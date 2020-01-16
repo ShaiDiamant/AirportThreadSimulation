@@ -1,21 +1,19 @@
 
 public class LogisticsCrew extends Crew {
 
-	private int cargoCapacity;
-	private QueueManager qm;
+	private int cargoCapacity;//Max amount of bags that this crew can carry
 	private int numOfCargoTrucks;
 
-	public LogisticsCrew(String name, int cargoCapacity, QueueManager qm) {
+	public LogisticsCrew(String name, int cargoCapacity, QueueManager qm) {//Basic builder method
 		super(name,qm);
 		this.cargoCapacity=cargoCapacity;
-		this.qm = qm;
 		this.numOfCargoTrucks=0;
 		Thread t = new Thread(this);
 		t.start();
 	}
 
 	@Override
-	public void doWork() {
+	public void doWork() {//Uncharges plane and forwards to next queue. if receives null from queue, day ended
 		Arrival curr;
 		curr = qm.logisticsQ.extract();
 		if(curr == null) {
@@ -26,7 +24,7 @@ public class LogisticsCrew extends Crew {
 		forwardPlane(curr);
 	}
 
-	private void capacityCheck(Arrival curr) {
+	private void capacityCheck(Arrival curr) {//Checks to see if it has enough capacity, if not, will call for backup
 		if(cargoCapacity >= curr.getNumOfBags()){
 			int timeWait= curr.getNumOfBags();
 			try {
@@ -55,7 +53,7 @@ public class LogisticsCrew extends Crew {
 		}
 	}
 
-	private void forwardPlane(Arrival curr) {
+	private void forwardPlane(Arrival curr) {//10% to have technical issue and forward to tech q, else to security q
 		curr.setLatestTreater(this);
 		if(Math.random()<=0.1) {
 			qm.technicalQ.insert(curr);
@@ -65,7 +63,7 @@ public class LogisticsCrew extends Crew {
 		}
 	}
 
-	public int getNumOfCargoTrucks(){
+	public int getNumOfCargoTrucks(){//Num of cargo trucks called getter
 		return this.numOfCargoTrucks;
 	}
 }

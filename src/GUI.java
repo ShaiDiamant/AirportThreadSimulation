@@ -19,26 +19,26 @@ import javax.swing.SwingConstants;
 
 public class GUI {
 
-	private JFrame frame;
-	private JTextField textField;
-	private JTextField textField_1;
-	public static Vector<Flight> flightsVector;
-	public static Vector<Runnable> workersVector;
-	public static QueueManager qm = new QueueManager();
-	public static int numOfTechCrews;
-	public static int numForSecurityDuration;
-	public static final int numOfSecurityCrews = 2;
-	public static final int numOfLogisticsCrews = 3;
-	public static final int numOfFuelingCrews = 2;
-	public static final int numOfManagementCrews = 1;
-	public static final int numOfRunwayDirectors = 3;
-	public static String flightsFileLocation = "FlightsData.txt";
+	private JFrame frame;//GUI Frame
+	private JTextField textFieldNumOfTechCrews;//GUI text field for number of tech crews
+	private JTextField textFieldSecurityCheckDuration;//GUI text field for duration of security checks
+	public static Vector<Flight> flightsVector;//Flights vector for all departures and arrivals
+	public static Vector<Runnable> workersVector;//Workers vector for all types of workers except runway directors
+	public static QueueManager qm = new QueueManager();//Queue Manager holds all the queues
+	public static int numOfTechCrews;//Number of technical crews in system from GUI
+	public static int numForSecurityDuration;//Duration of security check from GUI
+	public static final int numOfSecurityCrews = 2;//Number of security crews, dictated
+	public static final int numOfLogisticsCrews = 3;//Number of logistics crews, dictated
+	public static final int numOfFuelingCrews = 2;//Number of fueling crews dictated
+	public static final int numOfManagementCrews = 1;//Number of management crews, dictated
+	public static final int numOfRunwayDirectors = 3;//Number of runway directors, dictated
+	public static String flightsFileLocation = "FlightsData.txt";//Input file location
 
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) {//Main for gui initialization
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -88,18 +88,18 @@ public class GUI {
 		labelNumOfTechs.setFont(new Font("Arial", Font.BOLD, 15));
 		labelNumOfTechs.setBounds(115, 13, 177, 16);
 		frame.getContentPane().add(labelNumOfTechs);
-		textField = new JTextField();
+		textFieldNumOfTechCrews = new JTextField();
 
-		textField.setText("1");
-		textField.setBounds(115, 42, 177, 22);
-		frame.getContentPane().add(textField);
-		textField.setColumns(10);
+		textFieldNumOfTechCrews.setText("1");
+		textFieldNumOfTechCrews.setBounds(115, 42, 177, 22);
+		frame.getContentPane().add(textFieldNumOfTechCrews);
+		textFieldNumOfTechCrews.setColumns(10);
 		
-		textField_1 = new JTextField();
-		textField_1.setText("2");
-		textField_1.setBounds(115, 133, 177, 22);
-		frame.getContentPane().add(textField_1);
-		textField_1.setColumns(10);
+		textFieldSecurityCheckDuration = new JTextField();
+		textFieldSecurityCheckDuration.setText("2");
+		textFieldSecurityCheckDuration.setBounds(115, 133, 177, 22);
+		frame.getContentPane().add(textFieldSecurityCheckDuration);
+		textFieldSecurityCheckDuration.setColumns(10);
 		
 		JLabel labelNumsOnly1 = new JLabel("\u05DE\u05E1\u05E4\u05E8\u05D9\u05DD \u05D1\u05DC\u05D1\u05D3");
 		labelNumsOnly1.setHorizontalAlignment(SwingConstants.CENTER);
@@ -115,67 +115,67 @@ public class GUI {
 		labelNumsOnly2.setBounds(325, 136, 95, 16);
 		frame.getContentPane().add(labelNumsOnly2);
 		
-		textField.addKeyListener(new KeyAdapter() {
+		textFieldNumOfTechCrews.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				int key = e.getKeyCode();
 				if(((key>=e.VK_0 && key<=e.VK_9) || (key>=e.VK_NUMPAD0 && key<=e.VK_NUMPAD9) || key == e.VK_DELETE || key == e.VK_BACK_SPACE) && !e.isShiftDown()) {
-					textField.setEditable(true);
-					textField.setBackground(Color.white);
+					textFieldNumOfTechCrews.setEditable(true);
+					textFieldNumOfTechCrews.setBackground(Color.white);
 				}
 				else {
-					textField.setEditable(false);
-					textField.setBackground(Color.red);
+					textFieldNumOfTechCrews.setEditable(false);
+					textFieldNumOfTechCrews.setBackground(Color.red);
 				}
 			}
 		});
 		
-		textField_1.addKeyListener(new KeyAdapter() {
+		textFieldSecurityCheckDuration.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				int key = e.getKeyCode();
 				if(((key>=e.VK_0 && key<=e.VK_9) || (key>=e.VK_NUMPAD0 && key<=e.VK_NUMPAD9) || key == e.VK_DELETE || key == e.VK_BACK_SPACE) && !e.isShiftDown()) {
-					textField_1.setEditable(true);
-					textField_1.setBackground(Color.white);
+					textFieldSecurityCheckDuration.setEditable(true);
+					textFieldSecurityCheckDuration.setBackground(Color.white);
 				}
 				else {
-					textField_1.setEditable(false);
-					textField_1.setBackground(Color.red);
+					textFieldSecurityCheckDuration.setEditable(false);
+					textFieldSecurityCheckDuration.setBackground(Color.red);
 				}
 			}
 		});
 		
-		btnExit.addMouseListener(new MouseAdapter() {
+		btnExit.addMouseListener(new MouseAdapter() {//Reaction for clicking the exit button
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				System.exit(0);
 			}
 		});
 		
-		btnStart.addMouseListener(new MouseAdapter() {
+		btnStart.addMouseListener(new MouseAdapter() {//Reaction for clicking the start button
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if(textField.getText().length() == 0) {
-					textField.setText("1");
+				if(textFieldNumOfTechCrews.getText().length() == 0) {
+					textFieldNumOfTechCrews.setText("1");
 					numOfTechCrews = 1;
 				}
 				else {
-					numOfTechCrews = Integer.parseInt(textField.getText());
+					numOfTechCrews = Integer.parseInt(textFieldNumOfTechCrews.getText());
 				}
-				if(textField_1.getText().length() == 0) {
-					textField_1.setText("2");
+				if(textFieldSecurityCheckDuration.getText().length() == 0) {
+					textFieldSecurityCheckDuration.setText("2");
 					numForSecurityDuration = 2;
 				}
 				else {
-					numForSecurityDuration = Integer.parseInt(textField_1.getText());
+					numForSecurityDuration = Integer.parseInt(textFieldSecurityCheckDuration.getText());
 				}
-				
+				qm = new QueueManager();
 				startAirport(numForSecurityDuration, numOfTechCrews);
 			}
 		});
 	}
 	
-	public static void startAirport(int numForSecurityDuration, int numOfTechTeams) {
+	public static void startAirport(int numForSecurityDuration, int numOfTechTeams) {//Reads input and initializes airport
 		System.out.println("Security Duration: "+numForSecurityDuration+", Technical Teams: "+numOfTechTeams);
 		flightsVector = new Vector<Flight>();
 		workersVector = new Vector<Runnable>();
@@ -183,7 +183,7 @@ public class GUI {
 		initializeWorkers();
 	}
 
-	public static void initializeWorkers(){
+	public static void initializeWorkers(){//Initializes all instances of crews
 		initializeRunwayDirectors();
 		initializeFuelingCrews();
 		initializeLogisticsCrews();
@@ -192,7 +192,7 @@ public class GUI {
 		initializeManagementCrews();
 	}
 
-	public static void initializeRunwayDirectors(){
+	public static void initializeRunwayDirectors(){//Initializes all instances of runway directors
 		Vector<RunwayDirector> runwayDirectors = new Vector<RunwayDirector>();
 		for(int i=0;i<numOfRunwayDirectors;i++){
 			RunwayDirector newRD = new RunwayDirector((int) (Math.random()*10000), flightsVector.size(), qm, runwayDirectors);
@@ -201,14 +201,14 @@ public class GUI {
 		}
 	}
 
-	public static void initializeFuelingCrews(){
+	public static void initializeFuelingCrews(){//Initializes all instances of fueling crews
 		FuelCrew FC1 = new FuelCrew("Fueling1", 10000, qm);
 		FuelCrew FC2 = new FuelCrew("Fueling2", 5000, qm);
 		workersVector.add(FC1);
 		workersVector.add(FC2);
 	}
 
-	public static void initializeLogisticsCrews(){
+	public static void initializeLogisticsCrews(){//Initializes all instances of logistics crews
 		LogisticsCrew LC1 = new LogisticsCrew("Logistics1", 90, qm);
 		LogisticsCrew LC2 = new LogisticsCrew("Logistics2", 70, qm);
 		LogisticsCrew LC3 = new LogisticsCrew("Logistics3", 50, qm);
@@ -217,7 +217,7 @@ public class GUI {
 		workersVector.add(LC3);
 	}
 
-	public static void initializeTechnicalCrews(){
+	public static void initializeTechnicalCrews(){//Initializes all instances of technical crews
 		String crewName;
 		for(int i=0;i<numOfTechCrews;i++){
 			crewName = "Technical"+(i+1);
@@ -226,7 +226,7 @@ public class GUI {
 		}
 	}
 
-	public static void initializeSecurityMans(){
+	public static void initializeSecurityMans(){//Initializes all instances of security men
 		for(int i=0;i<numOfSecurityCrews;i++){
 			SecurityMan SM;
 			if(Math.random() <= 0.5){
@@ -239,14 +239,14 @@ public class GUI {
 		}
 	}
 
-	public static void initializeManagementCrews(){
+	public static void initializeManagementCrews(){//Initializes all instances of management crews
 		for(int i=0;i<numOfManagementCrews;i++){
 			String crewName = "Management"+(i+1);
 			ManagementCrew MC = new ManagementCrew(crewName, qm, flightsVector.size());
 		}
 	}
 
-	public static void readFile(){
+	public static void readFile(){//Reads the file in the address of the static string, creates all according flights
 		BufferedReader inFile=null;
 		try
 		{
@@ -284,7 +284,7 @@ public class GUI {
 		}
 	}
 
-	public static boolean isNumeric(final String str) {
+	public static boolean isNumeric(final String str) {//to check if string is a number, for flight identification
 
 		if (str == null || str.length() == 0) {
 			return false;

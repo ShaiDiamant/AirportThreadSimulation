@@ -1,12 +1,12 @@
 
 public class SecurityMan implements Runnable{
 
-	private boolean dayEnd;
-	private String rank;
-	private int checkTime;
-	private QueueManager qm;
+	private boolean dayEnd; //has the day ended
+	private String rank; //rank for this security man
+	private int checkTime;//security check time from GUI
+	private QueueManager qm; //QueueManager instance for access to queues
 
-	public SecurityMan (String rank, int checkTime, QueueManager qm) {
+	public SecurityMan (String rank, int checkTime, QueueManager qm) {//Basic builder method
 		this.dayEnd = false;
 		this.rank=rank;
 		this.checkTime=checkTime;
@@ -15,13 +15,14 @@ public class SecurityMan implements Runnable{
 		t.start();
 	}
 
-	public void run() {
+	public void run() {//Will keep doing work untill dayEnd has changed to true
 		while (!dayEnd){
 			doWork();
 		}
+		System.out.println("Thread for security man with rank "+this.rank+" ended");
 	}
 
-	public void doWork() {
+	public void doWork() {//Will check for suspicious object and forward the plane to the fueling queue
 		Arrival curr;
 		curr = qm.securityQ.extract();
 		if(curr == null){
@@ -32,7 +33,7 @@ public class SecurityMan implements Runnable{
 		forwardPlane(curr);
 	}
 
-	public void suspiciousObjectCheck(Arrival curr) {
+	public void suspiciousObjectCheck(Arrival curr) {//5% chance to find a security issue, takes a while to make the test
 		try {
 			Thread.sleep(checkTime*1000);
 			curr.increaseTime(checkTime);
@@ -43,13 +44,14 @@ public class SecurityMan implements Runnable{
 			try {
 				Thread.sleep(2000);
 				curr.increaseTime(2);
+				curr.securityIssue();
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 		}
 	}
 
-	public void forwardPlane(Arrival curr) {
+	public void forwardPlane(Arrival curr) {//Forwards plane to the fueling queue and updates latest treater of flight
 		curr.setLatestTreater(this);
 		qm.fuelingQ.insert(curr);
 	}

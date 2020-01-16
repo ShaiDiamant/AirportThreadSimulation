@@ -3,14 +3,14 @@ import java.util.Random;
 public class TechnicalCrew extends Crew {
 
 
-	public TechnicalCrew(String name, QueueManager qm) {
+	public TechnicalCrew(String name, QueueManager qm) {//Basic builder method
 		super(name, qm);
 		Thread t = new Thread(this);
 		t.start();
 	}
 
 	@Override
-	public void doWork() {
+	public void doWork() {//pulls an arrival flight from tech q, if null ends day, if not, treats and forwards
 		Random rand = new Random();
 		Arrival curr = qm.technicalQ.extract();
 		if(curr == null) {
@@ -22,7 +22,7 @@ public class TechnicalCrew extends Crew {
 		forwardPlane(curr);
 	}
 
-	private void forwardPlane(Arrival curr) {
+	private void forwardPlane(Arrival curr) {//checks who was the latest treater and forwards the plane to the appropriate queue
 		curr.setLatestTreater(this);
 		Object latestTreater = curr.getLatestTreater();
 		if(latestTreater instanceof RunwayDirector) {
@@ -37,7 +37,7 @@ public class TechnicalCrew extends Crew {
 		}
 	}
 
-	public void fixFlight(int time,Arrival curr) {
+	public void fixFlight(int time,Arrival curr) {//handles technical issues
 		try {
 			Thread.sleep(time*1000);
 			curr.increaseTime(time);

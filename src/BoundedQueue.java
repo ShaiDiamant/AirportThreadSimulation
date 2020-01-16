@@ -1,13 +1,13 @@
 
 public class BoundedQueue<T> extends Queue<T> {
 
-	private final int maxSize=8;
+	private final int maxSize=8;//max size given in this assignment
 
-	public BoundedQueue() {
+	public BoundedQueue() {//basic builder method uses inherited builder
 		super();
 	}
 
-	public synchronized boolean insert(T t) {
+	public synchronized boolean insert(T t) {//synchronized insert up to max size with wait
 		while(queue.size() >= maxSize) {
 			try {
 				wait();
@@ -21,7 +21,7 @@ public class BoundedQueue<T> extends Queue<T> {
 		return status;
 	}
 	
-	public synchronized T extract() {
+	public synchronized T extract() {//synchronized extract with wait
 		while(queue.isEmpty()) {
 			try {
 				wait();

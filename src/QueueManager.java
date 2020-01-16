@@ -7,7 +7,7 @@ public class QueueManager {//This object will hold all relevant queues - all pub
     public Queue<Arrival> logisticsQ;
     public Queue<Arrival> securityQ;
 
-    public QueueManager(){
+    public QueueManager(){//Basic builder to create all instances
         this.arrivals = new Queue<Arrival>();
         this.departures = new Queue<Departure>();
         this.technicalQ = new Queue<Arrival>();

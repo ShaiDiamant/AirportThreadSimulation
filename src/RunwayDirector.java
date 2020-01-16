@@ -2,29 +2,28 @@ import java.util.Random;
 import java.util.Vector;
 
 public class RunwayDirector implements Runnable {
-	private boolean dayEnd;
-	private int runwayLength;
-	private Random rand;
-	private QueueManager qm;
-	private int numOfFlightsToday;
-	private int numOfFlightsThatPassed;
-	private Vector<RunwayDirector> runwayDirectors;
+	private boolean dayEnd; //Has the day ended marker
+	private int runwayLength; //Runway length randomly generated in main
+	private QueueManager qm;//QueueManager instance for access to all queues
+	private int numOfFlightsToday; //Num of flights that are supposed to pass today
+	private int numOfFlightsThatPassed;//Num of flights this instance has managed
+	private Vector<RunwayDirector> runwayDirectors;//Vector of all rwdirectors for flights passed calculations
 
 
-	public RunwayDirector(int runwayLength, int numOfFlightsToday, QueueManager qm, Vector<RunwayDirector> runwayDirectors) {
+	public RunwayDirector(int runwayLength, int numOfFlightsToday, QueueManager qm, Vector<RunwayDirector> runwayDirectors) {//Basic builder method
 		this.dayEnd = false;
 		this.runwayLength = runwayLength;
 		this.qm = qm;
 		this.numOfFlightsToday = numOfFlightsToday;
 		this.numOfFlightsThatPassed = 0;
 		this.runwayDirectors = runwayDirectors;
-		this.rand = new Random();
 		Thread t = new Thread(this);
 		t.start();
 	}
 
 	@Override
-	public void run() {
+	public void run() {/*Will work until all flights have passed, when one thread recognized the day ended, he will
+						insert nulls to the queues so the other threads know the day ended*/
 		while(!end() && !dayEnd) {
 			doWork();
 		}
@@ -32,9 +31,10 @@ public class RunwayDirector implements Runnable {
 			qm.arrivals.insert(null);
 			qm.departures.insert(null);
 		}
+		System.out.println("Thread for RunwayDirector with length "+this.runwayLength+" ended");
 	}
 
-	public void doWork() {
+	public void doWork() {//Will arrivals first, departures only if no arrivals in queue
 		if(qm.arrivals.size() == 0) {//no arrivals, can do departures
 			Departure curr = qm.departures.extract();
 			if(curr == null){
@@ -54,7 +54,8 @@ public class RunwayDirector implements Runnable {
 		this.numOfFlightsThatPassed++;
 	}
 
-	private void handleArrival(Arrival arrival) {
+	private void handleArrival(Arrival arrival) {//Lands the plane and forwards to technical q with 25% or to logistics q
+		Random rand = new Random();
 		arrival.setLatestTreater(this);
 		int depTime = (rand.nextInt(6) + 5);
 		try {
@@ -71,7 +72,8 @@ public class RunwayDirector implements Runnable {
 		}
 	}
 
-	private void handleDeparture(Departure departure) {
+	private void handleDeparture(Departure departure) {//Handles the departure and submits flight details to management
+		Random rand = new Random();
 		departure.setLatestTreater(this);
 		int depTime = (rand.nextInt(6) + 5);
 		try {
@@ -84,14 +86,14 @@ public class RunwayDirector implements Runnable {
 		qm.managementQ.insert(det);
 	}
 
-	public int getNumOfFlightsThatPassed() {
+	public int getNumOfFlightsThatPassed() {//num of flights this instance passed getter
 		return this.numOfFlightsThatPassed;
 	}
 
-	private boolean end() {
+	private boolean end() {//sums all flights that passed and returns true if all passed
 		int sumNumOfFlights=0;
-		for (RunwayDirector curr : runwayDirectors) {
-			sumNumOfFlights = sumNumOfFlights + curr.getNumOfFlightsThatPassed();
+		for (int i=0;i<runwayDirectors.size();i++) {
+			sumNumOfFlights = sumNumOfFlights + runwayDirectors.get(i).getNumOfFlightsThatPassed();
 		}
 		return this.numOfFlightsToday == sumNumOfFlights;
 	}

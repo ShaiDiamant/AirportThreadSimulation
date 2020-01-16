@@ -1,14 +1,14 @@
 
 abstract public class Flight implements Runnable {
 
-	protected String flightCode;
-	protected int numOfPassengers;
-	protected int arrivalTime;
-	protected QueueManager qm;
-	protected Object latestTreater;
-	protected int totalTime;
+	protected String flightCode;//Flight code for this flight
+	protected int numOfPassengers;//Number of passengers on plane
+	protected int arrivalTime;//Delay of arrival\departure
+	protected QueueManager qm;//QueueManager instance for access to queues
+	protected Object latestTreater;//Latest treater marker for queue management
+	protected int totalTime;//Total time in process(not including queue times)
 	
-	public Flight (String flightCode, int numOfPassengers, int arrivalTime, QueueManager qm) {
+	public Flight (String flightCode, int numOfPassengers, int arrivalTime, QueueManager qm) {//Basic builder method
 		this.flightCode=flightCode;
 		this.numOfPassengers=numOfPassengers;
 		this.arrivalTime=arrivalTime*1000;
@@ -16,29 +16,17 @@ abstract public class Flight implements Runnable {
 		this.latestTreater = null;
 		this.totalTime=0;
 	}
-	
-	public String getFlightCode() {
-		return this.flightCode;
-	}
-	
-	public int getNumOfPassengers() {
-		return this.numOfPassengers;
-	}
 
-	public int getArrivalTime() {
-		return this.arrivalTime;
-	}
+	abstract public FlightDetails getFlightDetails();//Each type of flight makes a different type of FlightDetails object
 	
-	abstract public FlightDetails getFlightDetails();
-	
-	public Object getLatestTreater() {
+	public Object getLatestTreater() {//Latest treater getter
 		return this.latestTreater;
 	}
-	public void setLatestTreater(Object o) {
+	public void setLatestTreater(Object o) {//Updates latest treater
 		this.latestTreater = o;
 	}
 	
-	public void increaseTime(int t) {
+	public void increaseTime(int t) {//Increases this flight's time in airport by t seconds
 		this.totalTime=this.totalTime+t;
 	}
 

@@ -1,13 +1,13 @@
 import java.util.Vector;
 
 public class ArrivalFlightDetails extends FlightDetails {
-	private int cargo;
-	private int cost;
-	private int amountOfFuel;
-	private boolean securityIssue;
+	private int cargo; //number of bags on flight
+	private int cost;//total cost of flight to our teams
+	private int amountOfFuel;//amount of fuel for this flight
+	private boolean securityIssue;//did this flight have a security issue
 
 	public ArrivalFlightDetails(String flightCode, int numOfPassengers, int timeInAirfield,
-								int cargo, int cost, boolean securityIssue) {
+								int cargo, int cost, boolean securityIssue) {//Basic builder method
 		super(flightCode, numOfPassengers, timeInAirfield);
 		this.cargo = cargo;
 		this.cost = cost;
@@ -15,19 +15,19 @@ public class ArrivalFlightDetails extends FlightDetails {
 		this.amountOfFuel = 0;
 	}
 
-	public int getCost() {
+	public int getCost() {//total cost for flight getter
 		return this.cost;
 	}
 
-	public boolean getSecurityIssue() {
+	public boolean getSecurityIssue() {//security issue getter
 		return this.securityIssue;
 	}
 
-	public int getCargo() {
+	public int getCargo() {//num of bags getter
 		return this.cargo;
 	}
 
-	public int getamountOfFuel() {//TODO: Find solution
-		return 0;
+	public int getAmountOfFuel() {//amount of fuel getter
+		return this.amountOfFuel;
 	}
 }

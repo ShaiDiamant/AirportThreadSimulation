@@ -1,13 +1,13 @@
 
 public class DepartureFlightDetails extends FlightDetails {
-	private String dest;
+	private String dest;//Flight destination
 
-	public DepartureFlightDetails(String flightCode, int numOfPassengers, int timeInAirfield, String destination) {
+	public DepartureFlightDetails(String flightCode, int numOfPassengers, int timeInAirfield, String destination) {//Basic builder method
 		super(flightCode, numOfPassengers, timeInAirfield);
 		this.dest = destination;
 	}
 	
-	public String getDestination() {
+	public String getDestination() {//Destination getter
 		return this.dest;
 	}
 

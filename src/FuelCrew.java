@@ -1,11 +1,11 @@
 import java.util.*;
 public class FuelCrew extends Crew {
 
-	private int maxCapacity;
-	private int numOfFuels;
-	private int currCapacity;
+	private int maxCapacity;//Max fuel capacity in truck
+	private int numOfFuels;//Number of fueling actions performed
+	private int currCapacity;//Current fuel status
 
-	public FuelCrew(String name, int maxCapacity, QueueManager qm) {
+	public FuelCrew(String name, int maxCapacity, QueueManager qm) {//Basic builder method
 		super(name, qm);
 		this.maxCapacity=maxCapacity;
 		this.currCapacity = this.maxCapacity;
@@ -15,7 +15,7 @@ public class FuelCrew extends Crew {
 	}
 
 	@Override
-	public void doWork() {
+	public void doWork() {//will fuel a plane and forward it to next queue. if extracts null from queue, day ended
 		Arrival curr;
 		curr = qm.fuelingQ.extract();
 		if(curr == null) {
@@ -26,7 +26,7 @@ public class FuelCrew extends Crew {
 		forwardPlane(curr);
 	}
 
-	public void fuelTest(Arrival curr) {
+	public void fuelTest(Arrival curr) {//will check to see fuel amount and refuel if needed, fuel the plane and count
 		if(currCapacity>=1000) {
 			Random rand = new Random();
 			int fuelTime = rand.nextInt(2)+3;
@@ -51,7 +51,7 @@ public class FuelCrew extends Crew {
 		}
 	}
 
-	public void forwardPlane(Arrival curr) {
+	public void forwardPlane(Arrival curr) {//35% to have technical issue and send to tech q, else to management q
 		curr.setLatestTreater(this);
 		if(Math.random()<=0.35) {
 			qm.technicalQ.insert(curr);
@@ -62,7 +62,7 @@ public class FuelCrew extends Crew {
 		}
 	}
 
-	public int getNumOfFuels(){
+	public int getNumOfFuels(){//Num of fuels getter
 		return this.numOfFuels;
 	}
 }
