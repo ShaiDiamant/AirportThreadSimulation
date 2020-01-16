@@ -11,6 +11,10 @@ public class TechnicalCrew extends Crew {
 	public void doWork() {
 		Random rand = new Random();
 		Arrival curr = qm.technicalQ.extract();
+		if(curr == null) {
+			this.dayEnd=true;
+			return;
+		}
 		fixFlight(rand.nextInt(3)+3, curr);
 		curr.increaseCost(rand.nextInt(501)+500);
 		forwardPlane(curr);
@@ -39,5 +43,4 @@ public class TechnicalCrew extends Crew {
 			e.printStackTrace();
 		}
 	}
-
 }

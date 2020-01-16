@@ -18,6 +18,10 @@ public class LogisticsCrew extends Crew {
 	public void doWork() {
 		Arrival curr;
 		curr = qm.logisticsQ.extract();
+		if(curr == null) {
+			this.dayEnd=true;
+			return;
+		}
 		capacityCheck(curr);
 		forwardPlane(curr);
 	}

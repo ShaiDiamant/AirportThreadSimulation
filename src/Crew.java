@@ -1,21 +1,17 @@
 
-abstract public class Crew implements Runnable,Stoppable {
+abstract public class Crew implements Runnable {
 	
 	protected String nameCrew;
-	protected boolean stop;
 	protected QueueManager qm;
+	protected boolean dayEnd;
 
 	public Crew (String name, QueueManager qm) {
 		this.nameCrew=name;
-		this.stop=false;
-	}
-
-	public void stop() {
-		this.stop = true;
+		this.dayEnd=false;
 	}
 
 	public void run(){
-		while(!stop){
+		while(!dayEnd){
 			doWork();
 		}
 	}
