@@ -8,6 +8,8 @@ public class ManagementCrew extends Crew {
 		super(name,qm);
 		this.numOfFlightsToday = numOfFlightsToday;
 		this.numOfFlightsThatPassed = 0;
+		Thread t = new Thread(this);
+		t.start();
 	}
 
 	@Override
