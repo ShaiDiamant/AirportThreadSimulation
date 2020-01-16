@@ -3,3 +3,5 @@ NC728	125	0	Latvia
 GA528	149	0	36
 AF123	118	0	62
 PI482	179	1	Bolivia
+				
+				

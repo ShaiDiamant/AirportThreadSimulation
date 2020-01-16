@@ -253,10 +253,9 @@ public class GUI {
 			FileReader fr = new FileReader (flightsFileLocation);
 			inFile = new BufferedReader (fr);
 			inFile.readLine();
-			String[] separatedLine;
+			String[] separatedLine = inFile.readLine().split("\t");
 			Flight tempF;
 			do{
-				separatedLine = inFile.readLine().split("\t");
 				if(isNumeric(separatedLine[3])) {//if this is a number, its an incoming flight
 					tempF = new Arrival(separatedLine[0], Integer.parseInt(separatedLine[1]), Integer.parseInt(separatedLine[2]), qm, Integer.parseInt(separatedLine[3]));
 				}
@@ -266,6 +265,7 @@ public class GUI {
 				}
 				flightsVector.add(tempF);
 				System.out.println(tempF.flightCode);
+				separatedLine = inFile.readLine().split("\t");
 			}while(inFile.ready() && separatedLine.length == 4);
 		}
 		catch (FileNotFoundException exception)
