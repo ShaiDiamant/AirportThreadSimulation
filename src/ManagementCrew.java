@@ -1,4 +1,3 @@
-import java.util.Vector;
 
 public class ManagementCrew extends Crew {
 	
@@ -50,4 +49,38 @@ public class ManagementCrew extends Crew {
 	private boolean end() {
 		return this.numOfFlightsThatPassed == this.numOfFlightsToday;
 	}
+	
+	private void endDayForAll() {
+		endDayForTechnical();
+		endDayForSecurity();
+		endDayForLogistics();
+		endDayForFuels();
+	}
+	
+	private void endDayForTechnical() {
+		for(int i=0; i<=GUI.numOfTechCrews; i++) {
+			qm.technicalQ.insert(null);
+		}
+	}
+	
+	private void endDayForSecurity() {
+		for(int i=0; i<=GUI.numForSecurityDuration; i++) {
+			qm.technicalQ.insert(null);
+		}
+	}
+	
+	private void endDayForLogistics() {
+		for(int i=0; i<=GUI.numOfLogisticsCrews; i++) {
+			qm.technicalQ.insert(null);
+		}
+	}
+	
+	private void endDayForFuels() {
+		for(int i=0; i<=GUI.numOfFuelingCrews; i++) {
+			qm.technicalQ.insert(null);
+		}
+	}
+	
+	
+	
 }
