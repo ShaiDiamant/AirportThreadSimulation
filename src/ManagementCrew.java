@@ -50,12 +50,11 @@ public class ManagementCrew extends Crew {
 
 	private void printFlightsDetails() {
 		int sumOfPassangers = 	findNumOfPassangers();
-		System.out.println("The number of passanfers during ths day: " + sumOfPassangers);
+		System.out.println("The number of passengers during ths day: " + sumOfPassangers);
 		int sumOfCargo = findNumOfCargo();
-		System.out.println("The number of crgo during the day: " + sumOfCargo);
-		// ����� ��� ����
+		System.out.println("The total amount of cargo during the day: " + sumOfCargo);
 		int sumCost = findCostOfFlights();
-		System.out.println("The cost of the day: " + sumCost);
+		System.out.println("The cost of technical treatments to flights today: " + sumCost);
 		int sumOfGas = findSumOfGas();
 		System.out.println("The amount of gas during the day: " + sumOfGas);
 	}	
