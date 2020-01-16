@@ -123,9 +123,6 @@ public class GUI {
 					textField.setEditable(true);
 					textField.setBackground(Color.white);
 				}
-				else if(key == e.VK_BACK_QUOTE){
-					//TODO: Find a way to solve this with `
-				}
 				else {
 					textField.setEditable(false);
 					textField.setBackground(Color.red);
