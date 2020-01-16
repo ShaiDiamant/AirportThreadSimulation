@@ -1,4 +1,3 @@
-import java.util.Vector;
 
 public class ManagementCrew extends Crew {
 	
@@ -47,7 +46,69 @@ public class ManagementCrew extends Crew {
 		}
 	}
 	
+	private void printFlightsDetails() {
+	int sumOfPassangers = 	findNumOfPassangers();
+	System.out.println("The number of passanfers during ths day: " + sumOfPassangers);
+	int sumOfCargo = findNumOfCargo();
+	System.out.println("The nunber of crgo during the day: " + sumOfCargo);
+	}	
+	
+	
+	private int findNumOfPassangers() {
+		int sumOfPassangers = 0;
+		for(int i=0; i<qm.managementQ.size(); i++) {
+			FlightDetails curr = qm.managementQ.extract();
+			sumOfPassangers = sumOfPassangers+curr.getNumOfPassangers();
+		}
+		return sumOfPassangers;
+	}
+	
+	private int findNumOfCargo() {
+		int sumOfCargo = 0;
+		for(int i=0; i<qm.managementQ.size(); i++) {
+			FlightDetails curr = qm.managementQ.extract();
+			if(curr instanceof ArrivalFlightDetails) {
+				sumOfCargo = sumOfCargo + ((ArrivalFlightDetails)curr).getCargo();
+			}
+		}
+		return sumOfCargo;
+	}
+	
 	private boolean end() {
 		return this.numOfFlightsThatPassed == this.numOfFlightsToday;
 	}
+	
+	private void endDayForAll() {
+		endDayForTechnical();
+		endDayForSecurity();
+		endDayForLogistics();
+		endDayForFuels();
+	}
+	
+	private void endDayForTechnical() {
+		for(int i=0; i<=GUI.numOfTechCrews; i++) {
+			qm.technicalQ.insert(null);
+		}
+	}
+	
+	private void endDayForSecurity() {
+		for(int i=0; i<=GUI.numForSecurityDuration; i++) {
+			qm.technicalQ.insert(null);
+		}
+	}
+	
+	private void endDayForLogistics() {
+		for(int i=0; i<=GUI.numOfLogisticsCrews; i++) {
+			qm.technicalQ.insert(null);
+		}
+	}
+	
+	private void endDayForFuels() {
+		for(int i=0; i<=GUI.numOfFuelingCrews; i++) {
+			qm.technicalQ.insert(null);
+		}
+	}
+	
+	
+	
 }
