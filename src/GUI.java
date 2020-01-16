@@ -18,8 +18,14 @@ public class GUI {
 	private JFrame frame;
 	private JTextField textField;
 	private JTextField textField_1;
-	private int numOfTechTeams;
-	private int numForSecurityDuration;
+	public static int numOfTechCrews;
+	public static int numForSecurityDuration;
+	public static final int numOfSecurityCrews = 2;
+	public static final int numOfLogisticsCrews = 3;
+	public static final int numOfFuelingCrews = 2;
+	public static final int numOfManagementCrews = 1;
+	public static final int numOfRunwayDirectors = 3;
+
 
 	/**
 	 * Launch the application.
@@ -146,10 +152,10 @@ public class GUI {
 			public void mouseClicked(MouseEvent e) {
 				if(textField.getText().length() == 0) {
 					textField.setText("1");
-					numOfTechTeams = 1;
+					numOfTechCrews = 1;
 				}
 				else {
-					numOfTechTeams = Integer.parseInt(textField.getText());
+					numOfTechCrews = Integer.parseInt(textField.getText());
 				}
 				if(textField_1.getText().length() == 0) {
 					textField_1.setText("2");
@@ -159,7 +165,7 @@ public class GUI {
 					numForSecurityDuration = Integer.parseInt(textField_1.getText());
 				}
 				
-				startAirport(numForSecurityDuration, numOfTechTeams);
+				startAirport(numForSecurityDuration, numOfTechCrews);
 			}
 		});
 	}

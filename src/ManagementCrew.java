@@ -16,8 +16,9 @@ public class ManagementCrew extends Crew {
 		while (!end()) {
 			doWork();
 		}
+		endDayForAll();
 	}
-	
+
 	public void doWork() {
 		FlightDetails curr;
 		curr = qm.managementQ.extract();
