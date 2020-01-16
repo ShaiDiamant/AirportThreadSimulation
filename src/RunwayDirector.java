@@ -1,20 +1,20 @@
 import java.util.Random;
 import java.util.Vector;
 
-public class RunwayDirector implements Runnable,Stoppable {
+public class RunwayDirector implements Runnable {
+	private boolean dayEnd;
 	private int runwayLength;
 	private Random rand;
 	private QueueManager qm;
-	private boolean stop; 
 	private int numOfFlightsToday;
 	private int numOfFlightsThatPassed;
 	private Vector<RunwayDirector> runwayDirectors;
 
 
 	public RunwayDirector(int runwayLength, int numOfFlightsToday, QueueManager qm, Vector<RunwayDirector> runwayDirectors) {
+		this.dayEnd = false;
 		this.runwayLength = runwayLength;
 		this.qm = qm;
-		this.stop = false;
 		this.numOfFlightsToday = numOfFlightsToday;
 		this.numOfFlightsThatPassed = 0;
 		this.runwayDirectors = runwayDirectors;
@@ -25,21 +25,30 @@ public class RunwayDirector implements Runnable,Stoppable {
 
 	@Override
 	public void run() {
-		while(!end() && !stop) {
+		while(!end() && !dayEnd) {
 			doWork();
 		}
-		for(int i=0; i<runwayDirectors.size(); i++) {
-			runwayDirectors.get(i).stop();
+		for(int i=0;i<runwayDirectors.size()-1;i++){
+			qm.arrivals.insert(null);
+			qm.departures.insert(null);
 		}
 	}
 
 	public void doWork() {
 		if(qm.arrivals.size() == 0) {//no arrivals, can do departures
 			Departure curr = qm.departures.extract();
+			if(curr == null){
+				this.dayEnd = true;
+				return;
+			}
 			handleDeparture(curr);
 		}
 		else {//there are arrivals, must do arrivals
 			Arrival curr = qm.arrivals.extract();
+			if(curr == null){
+				this.dayEnd = true;
+				return;
+			}
 			handleArrival(curr);
 		}
 		this.numOfFlightsThatPassed++;
@@ -75,18 +84,13 @@ public class RunwayDirector implements Runnable,Stoppable {
 		qm.managementQ.insert(det);
 	}
 
-	public void stop() {
-		this.stop = true;
-	}
-	
 	public int getNumOfFlightsThatPassed() {
 		return this.numOfFlightsThatPassed;
 	}
 
 	private boolean end() {
 		int sumNumOfFlights=0;
-		for(int i=0; i<runwayDirectors.size(); i++) {
-			RunwayDirector curr = runwayDirectors.get(i);
+		for (RunwayDirector curr : runwayDirectors) {
 			sumNumOfFlights = sumNumOfFlights + curr.getNumOfFlightsThatPassed();
 		}
 		return this.numOfFlightsToday == sumNumOfFlights;

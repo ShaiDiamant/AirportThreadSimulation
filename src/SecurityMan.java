@@ -1,22 +1,22 @@
 
-public class SecurityMan implements Runnable, Stoppable{
+public class SecurityMan implements Runnable{
 
+	private boolean dayEnd;
 	private String rank;
 	private int checkTime;
-	private boolean stop;
 	private QueueManager qm;
 
 	public SecurityMan (String rank, int checkTime, QueueManager qm) {
+		this.dayEnd = false;
 		this.rank=rank;
 		this.checkTime=checkTime;
-		this.stop=false;
 		this.qm = qm;
 		Thread t = new Thread(this);
 		t.start();
 	}
 
 	public void run() {
-		while (!stop){
+		while (!dayEnd){
 			doWork();
 		}
 	}
@@ -24,6 +24,10 @@ public class SecurityMan implements Runnable, Stoppable{
 	public void doWork() {
 		Arrival curr;
 		curr = qm.securityQ.extract();
+		if(curr == null){
+			this.dayEnd = true;
+			return;
+		}
 		suspiciousObjectCheck(curr);
 		forwardPlane(curr);
 	}
@@ -48,10 +52,6 @@ public class SecurityMan implements Runnable, Stoppable{
 	public void forwardPlane(Arrival curr) {
 		curr.setLatestTreater(this);
 		qm.fuelingQ.insert(curr);
-	}
-
-	public void stop() {
-		this.stop = true;
 	}
 
 }
