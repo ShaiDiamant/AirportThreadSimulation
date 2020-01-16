@@ -4,6 +4,7 @@ public class BoundedQueue<T> extends Queue<T> {
 	private final int maxSize=8;
 
 	public BoundedQueue() {
+		super();
 	}
 
 	public synchronized boolean insert(T t) {

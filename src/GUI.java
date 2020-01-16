@@ -24,7 +24,7 @@ public class GUI {
 	private JTextField textField_1;
 	public static Vector<Flight> flightsVector;
 	public static Vector<Runnable> workersVector;
-	public static QueueManager qm;
+	public static QueueManager qm = new QueueManager();
 	public static int numOfTechCrews;
 	public static int numForSecurityDuration;
 	public static final int numOfSecurityCrews = 2;
@@ -180,7 +180,6 @@ public class GUI {
 	
 	public static void startAirport(int numForSecurityDuration, int numOfTechTeams) {
 		System.out.println("Security Duration: "+numForSecurityDuration+", Technical Teams: "+numOfTechTeams);
-		qm = new QueueManager();
 		flightsVector = new Vector<Flight>();
 		workersVector = new Vector<Runnable>();
 		readFile();
@@ -269,6 +268,7 @@ public class GUI {
 
 				}
 				flightsVector.add(tempF);
+				System.out.println(tempF.flightCode);
 			}
 		}
 		catch (FileNotFoundException exception)

@@ -8,6 +8,7 @@ abstract public class Crew implements Runnable {
 	public Crew (String name, QueueManager qm) {
 		this.nameCrew=name;
 		this.dayEnd=false;
+		this.qm = qm;
 	}
 
 	public void run(){
