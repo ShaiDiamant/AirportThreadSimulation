@@ -1,6 +1,10 @@
 import java.awt.Color;
 import java.awt.EventQueue;
-
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Vector;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -18,6 +22,9 @@ public class GUI {
 	private JFrame frame;
 	private JTextField textField;
 	private JTextField textField_1;
+	public static Vector<Flight> flightsVector;
+	public static Vector<Runnable> workersVector;
+	public static QueueManager qm;
 	public static int numOfTechCrews;
 	public static int numForSecurityDuration;
 	public static final int numOfSecurityCrews = 2;
@@ -25,6 +32,7 @@ public class GUI {
 	public static final int numOfFuelingCrews = 2;
 	public static final int numOfManagementCrews = 1;
 	public static final int numOfRunwayDirectors = 3;
+	public static String flightsFileLocation = "FlightsData.txt";
 
 
 	/**
@@ -172,5 +180,127 @@ public class GUI {
 	
 	public static void startAirport(int numForSecurityDuration, int numOfTechTeams) {
 		System.out.println("Security Duration: "+numForSecurityDuration+", Technical Teams: "+numOfTechTeams);
+		qm = new QueueManager();
+		flightsVector = new Vector<Flight>();
+		workersVector = new Vector<Runnable>();
+		readFile();
+		initializeWorkers();
+	}
+
+	public static void initializeWorkers(){
+		initializeRunwayDirectors();
+		initializeFuelingCrews();
+		initializeLogisticsCrews();
+		initializeTechnicalCrews();
+		initializeSecurityMans();
+		initializeManagementCrews();
+	}
+
+	public static void initializeRunwayDirectors(){
+		Vector<RunwayDirector> runwayDirectors = new Vector<RunwayDirector>();
+		for(int i=0;i<numOfRunwayDirectors;i++){
+			RunwayDirector newRD = new RunwayDirector((int) (Math.random()*10000), flightsVector.size(), qm, runwayDirectors);
+			workersVector.add(newRD);
+			runwayDirectors.add(newRD);
+		}
+	}
+
+	public static void initializeFuelingCrews(){
+		FuelCrew FC1 = new FuelCrew("Fueling1", 10000, qm);
+		FuelCrew FC2 = new FuelCrew("Fueling2", 5000, qm);
+		workersVector.add(FC1);
+		workersVector.add(FC2);
+	}
+
+	public static void initializeLogisticsCrews(){
+		LogisticsCrew LC1 = new LogisticsCrew("Logistics1", 90, qm);
+		LogisticsCrew LC2 = new LogisticsCrew("Logistics2", 70, qm);
+		LogisticsCrew LC3 = new LogisticsCrew("Logistics3", 50, qm);
+		workersVector.add(LC1);
+		workersVector.add(LC2);
+		workersVector.add(LC3);
+	}
+
+	public static void initializeTechnicalCrews(){
+		String crewName;
+		for(int i=0;i<numOfTechCrews;i++){
+			crewName = "Technical"+(i+1);
+			TechnicalCrew TC = new TechnicalCrew(crewName, qm);
+			workersVector.add(TC);
+		}
+	}
+
+	public static void initializeSecurityMans(){
+		for(int i=0;i<numOfSecurityCrews;i++){
+			SecurityMan SM;
+			if(Math.random() <= 0.5){
+				SM = new SecurityMan("Senior", numForSecurityDuration, qm);
+			}
+			else{
+				SM = new SecurityMan("Junior", numForSecurityDuration, qm);
+			}
+			workersVector.add(SM);
+		}
+	}
+
+	public static void initializeManagementCrews(){
+		for(int i=0;i<numOfManagementCrews;i++){
+			String crewName = "Management"+(i+1);
+			ManagementCrew MC = new ManagementCrew(crewName, qm, flightsVector.size());
+		}
+	}
+
+	public static void readFile(){
+		BufferedReader inFile=null;
+		try
+		{
+			FileReader fr = new FileReader (flightsFileLocation);
+			inFile = new BufferedReader (fr);
+			inFile.readLine();
+			String[] separatedLine;
+			Flight tempF;
+			while(inFile.ready()) {
+				separatedLine = inFile.readLine().split("\t");
+				if(isNumeric(separatedLine[3])) {//if this is a number, its an incoming flight
+					tempF = new Arrival(separatedLine[0], Integer.parseInt(separatedLine[1]), Integer.parseInt(separatedLine[2]), qm, Integer.parseInt(separatedLine[3]));
+				}
+				else{
+					tempF = new Departure(separatedLine[0], Integer.parseInt(separatedLine[1]), Integer.parseInt(separatedLine[2]), qm, separatedLine[3]);
+
+				}
+				flightsVector.add(tempF);
+			}
+		}
+		catch (FileNotFoundException exception)
+		{
+			System.out.println ("The file " + flightsFileLocation + " was not found.");
+		}
+		catch (IOException e) {
+			System.out.println(e);
+		}
+		finally {
+			try {
+				inFile.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public static boolean isNumeric(final String str) {
+
+		if (str == null || str.length() == 0) {
+			return false;
+		}
+
+		try {
+
+			Integer.parseInt(str);
+			return true;
+
+		} catch (NumberFormatException e) {
+			return false;
+		}
+
 	}
 }
