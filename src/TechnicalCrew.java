@@ -5,6 +5,8 @@ public class TechnicalCrew extends Crew {
 
 	public TechnicalCrew(String name, QueueManager qm) {
 		super(name, qm);
+		Thread t = new Thread(this);
+		t.start();
 	}
 
 	@Override
