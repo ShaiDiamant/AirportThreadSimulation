@@ -4,13 +4,11 @@ public class ManagementCrew extends Crew {
 	
 	private int numOfFlightsToday;
 	private int numOfFlightsThatPassed;
-	private Vector<Stoppable> workers;
 	
-	public ManagementCrew (String name, QueueManager qm, int numOfFlightsToday, Vector<Stoppable> workers) {
+	public ManagementCrew (String name, QueueManager qm, int numOfFlightsToday) {
 		super(name,qm);
 		this.numOfFlightsToday = numOfFlightsToday;
 		this.numOfFlightsThatPassed = 0;
-		this.workers=workers;
 	}
 
 	@Override
@@ -18,9 +16,6 @@ public class ManagementCrew extends Crew {
 		while (!end()) {
 			doWork();
 		}
-		for(int i=0; i<workers.size(); i++) {
-			workers.get(i).stop();
-		}	
 	}
 	
 	public void doWork() {

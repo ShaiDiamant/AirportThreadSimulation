@@ -18,9 +18,12 @@ public class FuelCrew extends Crew {
 	public void doWork() {
 		Arrival curr;
 		curr = qm.fuelingQ.extract();
+		if(curr == null) {
+			this.dayEnd=true;
+			return;
+		}
 		fuelTest(curr);
 		forwardPlane(curr);
-
 	}
 
 	public void fuelTest(Arrival curr) {
@@ -46,7 +49,6 @@ public class FuelCrew extends Crew {
 				e.printStackTrace();
 			}
 		}
-
 	}
 
 	public void forwardPlane(Arrival curr) {
