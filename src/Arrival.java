@@ -22,7 +22,6 @@ public class Arrival extends Flight {
 			e.printStackTrace();
 		}
 		qm.arrivals.insert(this);
-		System.out.println("Thread of flight "+this.flightCode+" ended");
 	}
 
 	public int getNumOfBags() {//num of bags getter

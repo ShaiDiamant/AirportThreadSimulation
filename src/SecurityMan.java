@@ -21,7 +21,6 @@ public class SecurityMan implements Runnable{
 		while (!dayEnd){
 			doWork();
 		}
-		System.out.println("Thread for security man with rank "+this.rank+" ended");
 	}
 
 	public void doWork() {//Will check for suspicious object and forward the plane to the fueling queue

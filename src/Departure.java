@@ -17,7 +17,6 @@ public class Departure extends Flight {
 			e.printStackTrace();
 		}
 		qm.departures.insert(this);
-		System.out.println("Thread of flight "+this.flightCode+" ended");
 	}
 
 	@Override

@@ -17,7 +17,6 @@ abstract public class Crew implements Runnable {
 		while(!dayEnd){
 			doWork();
 		}
-		System.out.println("Thread for crew "+this.nameCrew+" ended");
 	}
 
 	abstract public void doWork();//Each crew and it's own doWork method

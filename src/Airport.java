@@ -17,7 +17,8 @@ public class Airport {//Input file location
     private Vector<Flight> flightsVector;//Flights vector for all departures and arrivals
     private Vector<Runnable> workersVector;//Workers vector for all types of workers except runway directors
 
-    public Airport(String dataFileAddress, int numOfTechCrews, int numForSecurityDuration){
+    public Airport(String dataFileAddress, int numOfTechCrews, int numForSecurityDuration){//Basic builder method
+        System.out.println("Airport initiating");
         this.dataFileAddress = dataFileAddress;
         this.numOfTechCrews = numOfTechCrews;
         this.numForSecurityDuration = numForSecurityDuration;
@@ -32,7 +33,7 @@ public class Airport {//Input file location
         initializeAirport();
     }
 
-    private void initializeAirport(){
+    private void initializeAirport(){//Initializes the airport procedures
         readFile();
         initializeWorkers();
     }
@@ -100,7 +101,7 @@ public class Airport {//Input file location
         }
     }
 
-    public void readFile(){//Reads the file in the address of the static string, creates all according flights
+    private void readFile(){//Reads the file in the address of the static string, creates all according flights
         BufferedReader inFile=null;
         try
         {
@@ -118,7 +119,6 @@ public class Airport {//Input file location
 
                 }
                 this.flightsVector.add(tempF);
-                System.out.println(tempF.flightCode);
                 separatedLine = inFile.readLine().split("\t");
             }while(inFile.ready() && separatedLine.length == 4);
         }
@@ -159,23 +159,27 @@ public class Airport {//Input file location
         return this.qm;
     }
 
-    public int getNumOfFlightsToday(){
+    public int getNumOfFlightsToday(){//Number of flights to pass through the airport today getter
         return this.flightsVector.size();
     }
 
-    public int getNumOfTechCrews(){
+    public int getNumOfTechCrews(){//Number of tech crews in airport getter
         return this.numOfTechCrews;
     }
 
-    public int getNumOfSecurityCrews(){
+    public int getNumOfSecurityCrews(){//Number of security crews in airport getter
         return this.numOfSecurityCrews;
     }
 
-    public int getNumOfLogisticsCrews(){
+    public int getNumOfLogisticsCrews(){//Number of logistics crews in airport getter
         return this.numOfLogisticsCrews;
     }
 
-    public int getNumOfFuelingCrews(){
+    public int getNumOfFuelingCrews(){//Number of fueling crews in airport getter
         return this.numOfFuelingCrews;
+    }
+
+    public Vector<Runnable> getWorkersVector() {//Workers vector getterW
+        return workersVector;
     }
 }

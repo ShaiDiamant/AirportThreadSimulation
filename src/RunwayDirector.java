@@ -33,7 +33,6 @@ public class RunwayDirector implements Runnable {
 			qm.arrivals.insert(null);
 			qm.departures.insert(null);
 		}
-		System.out.println("Thread for RunwayDirector with length "+this.runwayLength+" ended");
 	}
 
 	public void doWork() {//Will arrivals first, departures only if no arrivals in queue
