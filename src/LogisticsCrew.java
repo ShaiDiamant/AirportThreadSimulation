@@ -4,8 +4,8 @@ public class LogisticsCrew extends Crew {
 	private int cargoCapacity;//Max amount of bags that this crew can carry
 	private int numOfCargoTrucks;
 
-	public LogisticsCrew(String name, int cargoCapacity, QueueManager qm) {//Basic builder method
-		super(name,qm);
+	public LogisticsCrew(String name, int cargoCapacity, Airport ap) {//Basic builder method
+		super(name,ap);
 		this.cargoCapacity=cargoCapacity;
 		this.numOfCargoTrucks=0;
 		Thread t = new Thread(this);

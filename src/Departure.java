@@ -3,8 +3,8 @@ public class Departure extends Flight {
 	
 	private String dest;//Destination of this flight
 
-	public Departure(String flightCode, int numOfPassengers, int arrivalTime, QueueManager qm , String dest) {//Basic builder method
-		super(flightCode, numOfPassengers, arrivalTime, qm);
+	public Departure(String flightCode, int numOfPassengers, int arrivalTime, Airport ap , String dest) {//Basic builder method
+		super(flightCode, numOfPassengers, arrivalTime, ap);
 		this.dest=dest;
 		Thread t = new Thread(this);
 		t.start();

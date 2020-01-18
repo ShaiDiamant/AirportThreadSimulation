@@ -5,15 +5,17 @@ public class RunwayDirector implements Runnable {
 	private boolean dayEnd; //Has the day ended marker
 	private int runwayLength; //Runway length randomly generated in main
 	private QueueManager qm;//QueueManager instance for access to all queues
+	private Airport ap;
 	private int numOfFlightsToday; //Num of flights that are supposed to pass today
 	private int numOfFlightsThatPassed;//Num of flights this instance has managed
 	private Vector<RunwayDirector> runwayDirectors;//Vector of all rwdirectors for flights passed calculations
 
 
-	public RunwayDirector(int runwayLength, int numOfFlightsToday, QueueManager qm, Vector<RunwayDirector> runwayDirectors) {//Basic builder method
+	public RunwayDirector(int runwayLength, int numOfFlightsToday, Airport ap, Vector<RunwayDirector> runwayDirectors) {//Basic builder method
 		this.dayEnd = false;
 		this.runwayLength = runwayLength;
-		this.qm = qm;
+		this.ap = ap;
+		this.qm = ap.getQM();
 		this.numOfFlightsToday = numOfFlightsToday;
 		this.numOfFlightsThatPassed = 0;
 		this.runwayDirectors = runwayDirectors;

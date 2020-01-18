@@ -4,9 +4,9 @@ public class ManagementCrew extends Crew {
 	private int numOfFlightsToday;//Total num of flights that are coming in or out today
 	private int numOfFlightsThatPassed;//Total num of flights that passed so far
 
-	public ManagementCrew (String name, QueueManager qm, int numOfFlightsToday) {//Basic builder method
-		super(name,qm);
-		this.numOfFlightsToday = numOfFlightsToday;
+	public ManagementCrew (String name, Airport ap) {//Basic builder method
+		super(name,ap);
+		this.numOfFlightsToday = ap.getNumOfFlightsToday();
 		this.numOfFlightsThatPassed = 0;
 		Thread t = new Thread(this);
 		t.start();
@@ -114,25 +114,25 @@ public class ManagementCrew extends Crew {
 	}
 
 	private void endDayForTechnical() {//Ends day for all technical crews by inserting nulls to their queue according to amount of crews
-		for(int i=0; i<=GUI.numOfTechCrews; i++) {
+		for(int i=0; i<=ap.getNumOfTechCrews(); i++) {
 			qm.technicalQ.insert(null);
 		}
 	}
 
 	private void endDayForSecurity() {//Ends day for all security men by inserting nulls to their queue according to amount of men
-		for(int i=0; i<=GUI.numOfSecurityCrews; i++) {
+		for(int i=0; i<=ap.getNumOfSecurityCrews(); i++) {
 			qm.securityQ.insert(null);
 		}
 	}
 
 	private void endDayForLogistics() {//Ends day for all logistics crews by inserting nulls to their queue according to amount of crews
-		for(int i=0; i<=GUI.numOfLogisticsCrews; i++) {
+		for(int i=0; i<=ap.getNumOfLogisticsCrews(); i++) {
 			qm.logisticsQ.insert(null);
 		}
 	}
 
 	private void endDayForFuels() {//Ends day for all fueling crews by inserting nulls to their queue according to amount of crews
-		for(int i=0; i<=GUI.numOfFuelingCrews; i++) {
+		for(int i=0; i<=ap.getNumOfFuelingCrews(); i++) {
 			qm.fuelingQ.insert(null);
 		}
 	}

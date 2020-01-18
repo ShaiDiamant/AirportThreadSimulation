@@ -5,8 +5,8 @@ public class FuelCrew extends Crew {
 	private int numOfFuels;//Number of fueling actions performed
 	private int currCapacity;//Current fuel status
 
-	public FuelCrew(String name, int maxCapacity, QueueManager qm) {//Basic builder method
-		super(name, qm);
+	public FuelCrew(String name, int maxCapacity, Airport ap) {//Basic builder method
+		super(name, ap);
 		this.maxCapacity=maxCapacity;
 		this.currCapacity = this.maxCapacity;
 		this.numOfFuels=0;

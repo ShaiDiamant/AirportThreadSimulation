@@ -3,8 +3,8 @@ import java.util.Random;
 public class TechnicalCrew extends Crew {
 
 
-	public TechnicalCrew(String name, QueueManager qm) {//Basic builder method
-		super(name, qm);
+	public TechnicalCrew(String name, Airport ap) {//Basic builder method
+		super(name, ap);
 		Thread t = new Thread(this);
 		t.start();
 	}

@@ -5,12 +5,14 @@ public class SecurityMan implements Runnable{
 	private String rank; //rank for this security man
 	private int checkTime;//security check time from GUI
 	private QueueManager qm; //QueueManager instance for access to queues
+	private Airport ap;
 
-	public SecurityMan (String rank, int checkTime, QueueManager qm) {//Basic builder method
+	public SecurityMan (String rank, int checkTime,	Airport ap) {//Basic builder method
 		this.dayEnd = false;
 		this.rank=rank;
 		this.checkTime=checkTime;
-		this.qm = qm;
+		this.ap = ap;
+		this.qm = ap.getQM();
 		Thread t = new Thread(this);
 		t.start();
 	}

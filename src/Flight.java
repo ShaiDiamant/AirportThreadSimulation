@@ -5,14 +5,16 @@ abstract public class Flight implements Runnable {
 	protected int numOfPassengers;//Number of passengers on plane
 	protected int arrivalTime;//Delay of arrival\departure
 	protected QueueManager qm;//QueueManager instance for access to queues
+	protected Airport ap;
 	protected Object latestTreater;//Latest treater marker for queue management
 	protected int totalTime;//Total time in process(not including queue times)
 	
-	public Flight (String flightCode, int numOfPassengers, int arrivalTime, QueueManager qm) {//Basic builder method
+	public Flight (String flightCode, int numOfPassengers, int arrivalTime, Airport ap) {//Basic builder method
 		this.flightCode=flightCode;
 		this.numOfPassengers=numOfPassengers;
 		this.arrivalTime=arrivalTime*1000;
-		this.qm = qm;
+		this.ap = ap;
+		this.qm = ap.getQM();
 		this.latestTreater = null;
 		this.totalTime=0;
 	}

@@ -1,14 +1,8 @@
 import java.awt.Color;
 import java.awt.EventQueue;
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.Vector;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 import javax.swing.JButton;
-import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -22,17 +16,7 @@ public class GUI {
 	private JFrame frame;//GUI Frame
 	private JTextField textFieldNumOfTechCrews;//GUI text field for number of tech crews
 	private JTextField textFieldSecurityCheckDuration;//GUI text field for duration of security checks
-	public static Vector<Flight> flightsVector;//Flights vector for all departures and arrivals
-	public static Vector<Runnable> workersVector;//Workers vector for all types of workers except runway directors
-	public static QueueManager qm = new QueueManager();//Queue Manager holds all the queues
-	public static int numOfTechCrews;//Number of technical crews in system from GUI
-	public static int numForSecurityDuration;//Duration of security check from GUI
-	public static final int numOfSecurityCrews = 2;//Number of security crews, dictated
-	public static final int numOfLogisticsCrews = 3;//Number of logistics crews, dictated
-	public static final int numOfFuelingCrews = 2;//Number of fueling crews dictated
-	public static final int numOfManagementCrews = 1;//Number of management crews, dictated
-	public static final int numOfRunwayDirectors = 3;//Number of runway directors, dictated
-	public static String flightsFileLocation = "FlightsData.txt";//Input file location
+	private static String dataFileAddress = "FlightsData.txt";
 
 
 	/**
@@ -155,6 +139,8 @@ public class GUI {
 		btnStart.addMouseListener(new MouseAdapter() {//Reaction for clicking the start button
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				int numOfTechCrews;
+				int numForSecurityDuration;
 				if(textFieldNumOfTechCrews.getText().length() == 0) {
 					textFieldNumOfTechCrews.setText("1");
 					numOfTechCrews = 1;
@@ -169,135 +155,8 @@ public class GUI {
 				else {
 					numForSecurityDuration = Integer.parseInt(textFieldSecurityCheckDuration.getText());
 				}
-				qm = new QueueManager();
-				startAirport(numForSecurityDuration, numOfTechCrews);
+				Airport a1 = new Airport(dataFileAddress, numOfTechCrews, numForSecurityDuration);
 			}
 		});
-	}
-	
-	public static void startAirport(int numForSecurityDuration, int numOfTechTeams) {//Reads input and initializes airport
-		System.out.println("Security Duration: "+numForSecurityDuration+", Technical Teams: "+numOfTechTeams);
-		flightsVector = new Vector<Flight>();
-		workersVector = new Vector<Runnable>();
-		readFile();
-		initializeWorkers();
-	}
-
-	public static void initializeWorkers(){//Initializes all instances of crews
-		initializeRunwayDirectors();
-		initializeFuelingCrews();
-		initializeLogisticsCrews();
-		initializeTechnicalCrews();
-		initializeSecurityMans();
-		initializeManagementCrews();
-	}
-
-	public static void initializeRunwayDirectors(){//Initializes all instances of runway directors
-		Vector<RunwayDirector> runwayDirectors = new Vector<RunwayDirector>();
-		for(int i=0;i<numOfRunwayDirectors;i++){
-			RunwayDirector newRD = new RunwayDirector((int) (Math.random()*10000), flightsVector.size(), qm, runwayDirectors);
-			workersVector.add(newRD);
-			runwayDirectors.add(newRD);
-		}
-	}
-
-	public static void initializeFuelingCrews(){//Initializes all instances of fueling crews
-		FuelCrew FC1 = new FuelCrew("Fueling1", 10000, qm);
-		FuelCrew FC2 = new FuelCrew("Fueling2", 5000, qm);
-		workersVector.add(FC1);
-		workersVector.add(FC2);
-	}
-
-	public static void initializeLogisticsCrews(){//Initializes all instances of logistics crews
-		LogisticsCrew LC1 = new LogisticsCrew("Logistics1", 90, qm);
-		LogisticsCrew LC2 = new LogisticsCrew("Logistics2", 70, qm);
-		LogisticsCrew LC3 = new LogisticsCrew("Logistics3", 50, qm);
-		workersVector.add(LC1);
-		workersVector.add(LC2);
-		workersVector.add(LC3);
-	}
-
-	public static void initializeTechnicalCrews(){//Initializes all instances of technical crews
-		String crewName;
-		for(int i=0;i<numOfTechCrews;i++){
-			crewName = "Technical"+(i+1);
-			TechnicalCrew TC = new TechnicalCrew(crewName, qm);
-			workersVector.add(TC);
-		}
-	}
-
-	public static void initializeSecurityMans(){//Initializes all instances of security men
-		for(int i=0;i<numOfSecurityCrews;i++){
-			SecurityMan SM;
-			if(Math.random() <= 0.5){
-				SM = new SecurityMan("Senior", numForSecurityDuration, qm);
-			}
-			else{
-				SM = new SecurityMan("Junior", numForSecurityDuration, qm);
-			}
-			workersVector.add(SM);
-		}
-	}
-
-	public static void initializeManagementCrews(){//Initializes all instances of management crews
-		for(int i=0;i<numOfManagementCrews;i++){
-			String crewName = "Management"+(i+1);
-			ManagementCrew MC = new ManagementCrew(crewName, qm, flightsVector.size());
-		}
-	}
-
-	public static void readFile(){//Reads the file in the address of the static string, creates all according flights
-		BufferedReader inFile=null;
-		try
-		{
-			FileReader fr = new FileReader (flightsFileLocation);
-			inFile = new BufferedReader (fr);
-			inFile.readLine();
-			String[] separatedLine = inFile.readLine().split("\t");
-			Flight tempF;
-			do{
-				if(isNumeric(separatedLine[3])) {//if this is a number, its an incoming flight
-					tempF = new Arrival(separatedLine[0], Integer.parseInt(separatedLine[1]), Integer.parseInt(separatedLine[2]), qm, Integer.parseInt(separatedLine[3]));
-				}
-				else{
-					tempF = new Departure(separatedLine[0], Integer.parseInt(separatedLine[1]), Integer.parseInt(separatedLine[2]), qm, separatedLine[3]);
-
-				}
-				flightsVector.add(tempF);
-				System.out.println(tempF.flightCode);
-				separatedLine = inFile.readLine().split("\t");
-			}while(inFile.ready() && separatedLine.length == 4);
-		}
-		catch (FileNotFoundException exception)
-		{
-			System.out.println ("The file " + flightsFileLocation + " was not found.");
-		}
-		catch (IOException e) {
-			System.out.println(e);
-		}
-		finally {
-			try {
-				inFile.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-	}
-
-	public static boolean isNumeric(final String str) {//to check if string is a number, for flight identification
-
-		if (str == null || str.length() == 0) {
-			return false;
-		}
-
-		try {
-
-			Integer.parseInt(str);
-			return true;
-
-		} catch (NumberFormatException e) {
-			return false;
-		}
-
 	}
 }

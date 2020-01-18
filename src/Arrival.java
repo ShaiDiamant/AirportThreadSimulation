@@ -5,8 +5,8 @@ public class Arrival extends Flight {
 	private boolean isSecurityIssue; //did this flight have a security issue
 
 
-	public Arrival(String flightCode, int numOfPassengers, int arrivalTime, QueueManager qm, int numOfBags) {//Base builder method - no other type of arrival flights, so no other builders
-		super(flightCode, numOfPassengers, arrivalTime, qm);
+	public Arrival(String flightCode, int numOfPassengers, int arrivalTime, Airport ap, int numOfBags) {//Base builder method - no other type of arrival flights, so no other builders
+		super(flightCode, numOfPassengers, arrivalTime, ap);
 		this.numOfBags = numOfBags;
 		this.totalCost=0;
 		this.isSecurityIssue=false;
