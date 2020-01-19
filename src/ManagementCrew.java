@@ -22,7 +22,7 @@ public class ManagementCrew extends Crew {
 		this.totalNumOfPassengers = 0;
 		this.totalCostOfTreatments = 0;
 		this.numOfSecurityIssues = 0;
-		//this.db = new DataBase();
+		this.db = new DataBase();
 		Thread t = new Thread(this);
 		t.start();
 	}
@@ -44,7 +44,7 @@ public class ManagementCrew extends Crew {
 	public void doWork() {//Takes a flight detail from the q, enters info to SQL and prints flight details to console
 		FlightDetails curr;
 		curr = qm.managementQ.extract();
-		//enterInfo(curr);
+		enterInfo(curr);
 		sumInformation(curr);
 		printDetails(curr);
 		this.numOfFlightsThatPassed++;
