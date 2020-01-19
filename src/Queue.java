@@ -5,7 +5,7 @@ public class Queue<T> {
 	public Queue() {//Basic builder method
 		queue = new Vector<T>();
 	}
-	public int size() {//Gets queue size
+	public synchronized int size() {//Gets queue size
 		return queue.size();
 	}
 	public synchronized boolean insert(T t) {//Inserts T to queue and notifies all waiting threads

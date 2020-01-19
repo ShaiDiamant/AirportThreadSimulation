@@ -30,14 +30,14 @@ public class FuelCrew extends Crew {
 		if(currCapacity>=1000) {
 			Random rand = new Random();
 			int fuelTime = rand.nextInt(2)+3;
+			this.currCapacity=this.currCapacity-1000;
+			this.numOfFuels++;
 			try {
 				Thread.sleep(fuelTime*1000);
 				curr.increaseTime(fuelTime);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			this.currCapacity=this.currCapacity-1000;
-			this.numOfFuels++;
 		}
 		else {
 			qm.fuelingQ.insert(curr);

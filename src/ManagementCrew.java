@@ -30,6 +30,11 @@ public class ManagementCrew extends Crew {
 			doWork();
 		}
 		endDayForAll();
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		printFlightsDetails();
 	}
 

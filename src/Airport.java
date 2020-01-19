@@ -180,6 +180,6 @@ public class Airport {//Input file location
     }
 
     public Vector<Runnable> getWorkersVector() {//Workers vector getterW
-        return workersVector;
+        return this.workersVector;
     }
 }
