@@ -98,6 +98,7 @@ public class Airport {//Input file location
         for(int i=0;i<numOfManagementCrews;i++){
             String crewName = "Management"+(i+1);
             ManagementCrew MC = new ManagementCrew(crewName, this);
+            workersVector.add(MC);
         }
     }
 
