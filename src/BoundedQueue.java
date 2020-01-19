@@ -8,7 +8,7 @@ public class BoundedQueue<T> extends Queue<T> {
 	}
 
 	public synchronized boolean insert(T t) {//synchronized insert up to max size with wait
-		while(queue.size() >= maxSize) {
+		while(this.queue.size() >= maxSize) {
 			try {
 				wait();
 			}

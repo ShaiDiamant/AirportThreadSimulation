@@ -107,20 +107,19 @@ public class Airport {//Input file location
         {
             FileReader fr = new FileReader (this.dataFileAddress);
             inFile = new BufferedReader (fr);
-            inFile.readLine();
             String[] separatedLine = inFile.readLine().split("\t");
             Flight tempF;
-            do{
-                if(isNumeric(separatedLine[3])) {//if this is a number, its an incoming flight
-                    tempF = new Arrival(separatedLine[0], Integer.parseInt(separatedLine[1]), Integer.parseInt(separatedLine[2]), this, Integer.parseInt(separatedLine[3]));
+            while(inFile.ready() && separatedLine.length == 4){
+            	separatedLine = inFile.readLine().split("\t");
+                if(isNumeric(separatedLine[3].trim())) {//if this is a number, its an incoming flight
+                    tempF = new Arrival(separatedLine[0], Integer.parseInt(separatedLine[1]), Integer.parseInt(separatedLine[2]), this, Integer.parseInt(separatedLine[3].trim()));
                 }
                 else{
                     tempF = new Departure(separatedLine[0], Integer.parseInt(separatedLine[1]), Integer.parseInt(separatedLine[2]), this, separatedLine[3]);
 
                 }
                 this.flightsVector.add(tempF);
-                separatedLine = inFile.readLine().split("\t");
-            }while(inFile.ready() && separatedLine.length == 4);
+            }
         }
         catch (FileNotFoundException exception)
         {
@@ -138,21 +137,8 @@ public class Airport {//Input file location
         }
     }
 
-    private boolean isNumeric(final String str) {//to check if string is a number, for flight identification
-
-        if (str == null || str.length() == 0) {
-            return false;
-        }
-
-        try {
-
-            Integer.parseInt(str);
-            return true;
-
-        } catch (NumberFormatException e) {
-            return false;
-        }
-
+    private boolean isNumeric(String str){//to check if string is a number, for flight identification
+    	return str.matches("-?\\d+(\\.\\d+)?");
     }
 
     public QueueManager getQM(){//QueueManager getter

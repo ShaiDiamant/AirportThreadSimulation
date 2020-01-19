@@ -23,7 +23,6 @@ public class FuelCrew extends Crew {
 			return;
 		}
 		fuelTest(curr);
-		forwardPlane(curr);
 	}
 
 	public void fuelTest(Arrival curr) {//will check to see fuel amount and refuel if needed, fuel the plane and count
@@ -38,6 +37,7 @@ public class FuelCrew extends Crew {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
+			forwardPlane(curr);
 		}
 		else {
 			qm.fuelingQ.insert(curr);

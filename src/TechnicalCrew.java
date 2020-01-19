@@ -23,8 +23,8 @@ public class TechnicalCrew extends Crew {
 	}
 
 	private void forwardPlane(Arrival curr) {//checks who was the latest treater and forwards the plane to the appropriate queue
-		curr.setLatestTreater(this);
 		Object latestTreater = curr.getLatestTreater();
+		curr.setLatestTreater(this);
 		if(latestTreater instanceof RunwayDirector) {
 			qm.logisticsQ.insert(curr);
 		}
