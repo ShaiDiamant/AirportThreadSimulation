@@ -110,18 +110,18 @@ public class Airport {//Input file location
             inFile = new BufferedReader (fr);
             String[] separatedLine = inFile.readLine().split("\t");
             Flight tempF;
-            while(inFile.ready() && separatedLine.length == 4){
+            while(inFile.ready()){
             	separatedLine = inFile.readLine().split("\t");
-            	if(separatedLine.length<4){ continue; }
-                if(isNumeric(separatedLine[3].trim())) {//if this is a number, its an incoming flight
-                    tempF = new Arrival(separatedLine[0], Integer.parseInt(separatedLine[1]), Integer.parseInt(separatedLine[2]),
-                            this, Integer.parseInt(separatedLine[3].trim()));
-                }
-                else{
-                    tempF = new Departure(separatedLine[0], Integer.parseInt(separatedLine[1]), Integer.parseInt(separatedLine[2]), this, separatedLine[3]);
+            	if(separatedLine.length >= 4) {
+                    if (isNumeric(separatedLine[3].trim())) {//if this is a number, its an incoming flight
+                        tempF = new Arrival(separatedLine[0], Integer.parseInt(separatedLine[1]), Integer.parseInt(separatedLine[2]),
+                                this, Integer.parseInt(separatedLine[3].trim()));
+                    } else {
+                        tempF = new Departure(separatedLine[0], Integer.parseInt(separatedLine[1]), Integer.parseInt(separatedLine[2]), this, separatedLine[3]);
 
+                    }
+                    this.flightsVector.add(tempF);
                 }
-                this.flightsVector.add(tempF);
             }
         }
         catch (FileNotFoundException exception)
