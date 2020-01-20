@@ -42,7 +42,7 @@ public class RunwayDirector implements Runnable {
 				this.dayEnd = true;
 				return;
 			}
-			else if(curr.getFlightCode().equals("FICTIVE")){
+			else if(curr.getFlightCode().equals("FICTIVE")){//To allow runway directors to exit from queue waiting if they get stuck
 				return;
 			}
 			handleDeparture(curr);
