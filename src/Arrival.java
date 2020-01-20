@@ -21,6 +21,9 @@ public class Arrival extends Flight {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+		if(qm.departures.size() == 0){
+			qm.departures.insert(new Departure("FICTIVE", 0, 0, ap, "FICTIVE"));//Fictive flight to wake sleeping threads in departures
+		}
 		qm.arrivals.insert(this);
 	}
 

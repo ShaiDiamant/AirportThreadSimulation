@@ -16,7 +16,7 @@ public class GUI {
 	private JFrame frame;//GUI Frame
 	private JTextField textFieldNumOfTechCrews;//GUI text field for number of tech crews
 	private JTextField textFieldSecurityCheckDuration;//GUI text field for duration of security checks
-	private static String dataFileAddress = "FlightsData.txt";
+	private static String dataFileAddress = "FlightsData.txt";//Data file address - outside in project folder
 
 
 	/**

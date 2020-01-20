@@ -32,4 +32,8 @@ abstract public class Flight implements Runnable {
 		this.totalTime=this.totalTime+t;
 	}
 
+	public String getFlightCode(){
+		return this.flightCode;
+	}
+
 }

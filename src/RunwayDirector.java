@@ -42,6 +42,9 @@ public class RunwayDirector implements Runnable {
 				this.dayEnd = true;
 				return;
 			}
+			else if(curr.getFlightCode().equals("FICTIVE")){
+				return;
+			}
 			handleDeparture(curr);
 		}
 		else {//there are arrivals, must do arrivals

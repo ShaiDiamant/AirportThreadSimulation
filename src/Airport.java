@@ -113,7 +113,8 @@ public class Airport {//Input file location
             while(inFile.ready() && separatedLine.length == 4){
             	separatedLine = inFile.readLine().split("\t");
                 if(isNumeric(separatedLine[3].trim())) {//if this is a number, its an incoming flight
-                    tempF = new Arrival(separatedLine[0], Integer.parseInt(separatedLine[1]), Integer.parseInt(separatedLine[2]), this, Integer.parseInt(separatedLine[3].trim()));
+                    tempF = new Arrival(separatedLine[0], Integer.parseInt(separatedLine[1]), Integer.parseInt(separatedLine[2]),
+                            this, Integer.parseInt(separatedLine[3].trim()));
                 }
                 else{
                     tempF = new Departure(separatedLine[0], Integer.parseInt(separatedLine[1]), Integer.parseInt(separatedLine[2]), this, separatedLine[3]);
